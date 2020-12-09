@@ -16,4 +16,4 @@ bench_test_3 deals with the case where simply waiting a turn, like in future Ben
 # Current Developments
 Issue 1: Get the robots to actually stop at their assigned shelves at the end of the program, rather than any shelf available. Most likely solution will be to edit the goal-M.lp file, adding an integrity constraint that disallows any solution in which Robot n is not under Shelf n (with n being an arbitrary but fixed natural number).
 
-Issue 2: Finding out whether the merged plans are actually the two separate plans for each individual robot, now merged. Currently, in part due to Issue 1, this is not obvious.
+Issue 2: Finding out whether the merged plans are actually the two separate plans for each individual robot, now merged, rather than an entirely original plan altogether. Currently, in part due to Issue 1, this is not obviously apparent.
