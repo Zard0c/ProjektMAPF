@@ -5,7 +5,7 @@ robot(R)                     :- init(object(robot,R),          _).
 shelf(S)                     :- init(object(shelf,S),          _).
 station(P)                   :- init(object(pickingStation,P), _).
 product(A)                   :- init(object(product,A),        _).
-plan(R,D,T)                  :- occurs(object(robot, R), action(move,D), T).
+plan(robot(R),D,T)           :- occurs(object(robot, R), action(move,D), T).
 
     isRobot(robot(R)) :- robot(R).
     isShelf(shelf(S)) :- shelf(S).
