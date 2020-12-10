@@ -2,6 +2,7 @@
 This will be the place where I'll upload my progress for the MAPF project (further description pending)
 
 Currently, there are 3 benchmarks in this repository. Each folder contains one "combined" instance with both robots and shelves placed, two "separate" instances, one per specific robot and intended shelf, in order to create their individual plans which are to be combined for the "combined" instance, as well as one already completed plan for each robot, with which I am currently trying to get the merging to work (WIP).
+
 We are using the encodings available in the potassco asprilo seminar, and we are working on modifying them to specifically work for our benchmarks.
 
 # Benchmark 1
