@@ -10,6 +10,7 @@ nextto((X,Y),(DX,DY),(X',Y')) :- direction((DX,DY)), position((X,Y)), position((
 { move(R,D,T) : direction(D) } 1 :- isRobot(R), time(T).
 :-move(R,D,T1), plan(R,D,T2), T1 - T2 < 2.
 :-plan(R,D,_), not move(R,D,_).
+% alternative Idea: :-not move(R,D,_) : plan(R,D,_).
 
 % - move/3 ----------------------------------------------------------------------
 position(R,C,T) :- move(R,D,T), position(R,C',T-1),     nextto(C',D,C).
