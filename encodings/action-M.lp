@@ -16,6 +16,9 @@ move(R,D,T) :- plan(R,D,T).
 :-move(R,D,T1), plan(R,D,T2), T1 - T2 < 2.
 :-plan(R,D,_), not move(R,D,_).
 % alternative Idea: :-not move(R,D,_) : plan(R,D,_).
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/main
+=======
 >>>>>>> refs/remotes/origin/main
 
 % - move/3 ----------------------------------------------------------------------
