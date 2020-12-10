@@ -6,20 +6,9 @@ time(1..horizon).
 direction((X,Y)) :- X=-1..1, Y=-1..1, |X+Y|=1.
 nextto((X,Y),(DX,DY),(X',Y')) :- direction((DX,DY)), position((X,Y)), position((X',Y')),
                                  (X,Y)=(X'-DX,Y'-DY), (X',Y')=(X+DX,Y+DY).
-<<<<<<< HEAD
+
 move(R,D,T) :- plan(R,D,T).                                 
 %{ move(R,D,T) : direction(D) } 1 :- isRobot(R), time(T).
-
-=======
-                                 
-{ move(R,D,T) : direction(D) } 1 :- isRobot(R), time(T).
-:-move(R,D,T1), plan(R,D,T2), T1 - T2 < 2.
-:-plan(R,D,_), not move(R,D,_).
-% alternative Idea: :-not move(R,D,_) : plan(R,D,_).
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/main
-=======
->>>>>>> refs/remotes/origin/main
 
 % - move/3 ----------------------------------------------------------------------
 position(R,C,T) :- move(R,D,T), position(R,C',T-1),     nextto(C',D,C).
