@@ -1,9 +1,9 @@
 # README
-This will be the place where I'll upload my progress for the MAPF project (further description pending)
+This will be the place where we will upload our progress for the MAPF project (further description pending)
 
-Currently, there are 3 benchmarks in this repository. Each folder contains one "combined" instance with both robots and shelves placed, two "separate" instances, one per specific robot and intended shelf, in order to create their individual plans which are to be combined for the "combined" instance, as well as one already completed plan for each robot, with which I am currently trying to get the merging to work (WIP).
+Currently, there are 3 benchmarks in this repository. Each folder contains one "combined" instance with both robots and shelves placed, two "separate" instances, one per specific robot and intended shelf, in order to create their individual plans which are to be combined for the "combined" instance, as well as one already completed plan for each robot.
 
-We are using the encodings available in the potassco asprilo seminar, and we are working on modifying them to specifically work for our benchmarks.
+We are using the encodings available in the potassco asprilo seminar, and we are currently modifying them to specifically work for our benchmarks.
 
 # Benchmark 1
 bench_test_1 contains the most basic use case, it's not an actual benchmark for collision but rather being used to test whether or not the merging of plans works at all, and how it works exactly. Once I am done testing the basics it will be modified to also deal with a more interesting use case concerning collision detection, specifically a situation in which two robots wish to access the same square at the same time, forcing one to either wait or calculate a new route on the fly.
