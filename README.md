@@ -23,4 +23,7 @@ bench_test_3 deals with the case where simply waiting a turn, like in future Ben
 horizons: robot_1 - 2; robot_2 - 4, instance_3 (with predicted collision) - at least 6
 
 # Current Developments
-Issue 1: Get the robots to actually stop at their assigned shelves at the end of the program, rather than any shelf available. Most likely solution will be to edit the goal-M.lp file, adding an integrity constraint that disallows any solution in which Robot n is not under Shelf n (with n being an arbitrary but fixed natural number).
+We are currently experimenting with assigning specific robots to specific shelves (in multi-robot plans, not necessarily merged plans) via modifying goal-M.lp.
+
+# Upcoming
+Detailed instructions on how to run our benchmarks will be provided as soon as we are (reasonably) sure they work as we intend it. A 4th benchmark, a modification of Benchmark 1, will also be added in the near future.
