@@ -11,7 +11,9 @@ nextto((X,Y),(DX,DY),(X',Y')) :- direction((DX,DY)), position((X,Y)), position((
 
 move(R,D,T) :- plan(R,D,T).
 
-%attempt at solving the issue of two robots wanting to access the same square at the same time
+%attempt at solving the issue of two robots wanting to access the same square at the same time, general idea: the moment two robots want to go to the same square at the
+same time, stop the robot with lower priority from following the plan and instead make him do nothing for one cycle, then let him continue following the plan starting
+in the next cycle.
 
 %define a wait statement for a robot at time T, if 2 robots want to move to the same field at the same time and the robot in question is lower priority than the other
 wait(R',T) :- moveto(C',C,T), moveto(C'',C,T), nextto(C',D,C), nextto(C'',D,C), position(R,C',T), position(R',C'',T), R<R'.
