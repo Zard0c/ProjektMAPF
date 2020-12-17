@@ -23,7 +23,7 @@ wait(R',T) :- moveto(C',C,T), moveto(C'',C,T), nextto(C',D,C), nextto(C'',D,C), 
 position(R',C,T) :- position(R',C,T-1), wait(R',T-1), not move(R',_,T), isRobot(R), time(T).
 
 %extend move to also allow a modified plan if wait was true for a robot
-%issue: we want to the robot who waited to keep following the instructions in the plan except on time step later than in the plan, for all remaining moves in the plan; idea:
+%issue: we want the robot who waited to keep following the instructions in the plan except on time step later than in the plan, for all remaining moves in the plan; idea:
 move(R,D,T) :- plan(R,D,T-1), wait(R,T-1).
 
 
