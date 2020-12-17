@@ -22,6 +22,12 @@ bench_test_3 deals with the case where simply waiting a turn, like in future Ben
 
 horizons: robot_1 - 2; robot_2 - 4, instance_3 (with predicted collision) - at least 6
 
+# Benchmark 4 and 5
+These benchmarks are supposed to test the scenario where two robots want to access the same square at the same time. In 5 the solution will be to wait, in 4 one of the robots will have to find a new route.
+
+horizons bench_4: robot_1 - 8, robot_2 - 8, instance_4 - 8
+         bench_5: robot_1 - 4, robot_2 - 4, instance_5 - 5
+
 # Current Developments
 We are currently experimenting with assigning specific robots to specific shelves (in multi-robot plans, not necessarily merged plans) via modifying goal-M.lp.
 
