@@ -28,8 +28,10 @@ These benchmarks are supposed to test the scenario where two robots want to acce
 horizons bench_4: robot_1 - 8, robot_2 - 8, instance_4 - 8
          bench_5: robot_1 - 4, robot_2 - 4, instance_5 - 5
 
+# Encodings
+Here our encodings can be found. Currently, we are mostly working with the action-M.lp file, action-M.lp is the unmodified version, and two WIP versions exist, trying to deal with the collision where two robots access the same spot at the same time.
+
 # Current Developments
-We are currently experimenting with assigning specific robots to specific shelves (in multi-robot plans, not necessarily merged plans) via modifying goal-M.lp.
 
 # Upcoming
-Detailed instructions on how to run our benchmarks will be provided as soon as we are (reasonably) sure they work as we intend it. A 4th benchmark, a modification of Benchmark 1, will also be added in the near future.
+Detailed instructions on how to run our benchmarks will be provided as soon as we are (reasonably) sure they work as we intend it. 
