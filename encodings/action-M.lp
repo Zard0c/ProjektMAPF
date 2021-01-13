@@ -7,7 +7,7 @@ direction((X,Y)) :- X=-1..1, Y=-1..1, |X+Y|=1.
 nextto((X,Y),(DX,DY),(X',Y')) :- direction((DX,DY)), position((X,Y)), position((X',Y')),
                                  (X,Y)=(X'-DX,Y'-DY), (X',Y')=(X+DX,Y+DY).
 
-move(robot(R),D,T) :- occurs(object(robot, R), action(move,D), T).
+move(robot(R),D,T) :- plan_occurs(object(robot, R), action(move,D), T).
 %{ move(R,D,T) : direction(D) } 1 :- isRobot(R), time(T).
 
 
