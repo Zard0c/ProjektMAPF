@@ -19,7 +19,7 @@ position(R,(X,Y),T) :- position(R,(X,Y),T-1), not move(R,_,T), robot(R),time(T).
 
 
 %collision detection
-collision(R1,R2,T) :-	position(R1,(X1,Y1),T), position(R2,(X2,Y2),T), moveto((X1,Y1),(X,Y),T), moveto((X2,Y2),(X,Y),T), 				R1>R2,robot(R1),robot(R2),time(T).
+collision(R1,R2,T) :-	position(R1,(X1,Y1),T), position(R2,(X2,Y2),T), moveto((X1,Y1),(X,Y),T), moveto((X2,Y2),(X,Y),T),R1>R2,robot(R1),robot(R2),time(T).
 
 %define wait (essentially, wait is true for a robot if collision is true for it) (might be superfluous)
 wait(R1,T) :- collision(R1,R2,T), robot(R1), robot(R2), time(T).
