@@ -5,3 +5,6 @@ The idea is simply to define a collision flag, which in turn gets reduced to a w
 
 Current issues: The program ignores the wait command entirely, resulting in incorrect steps and robots ignoring the vertex collision. Furthermore, I have yet to find a way to define a new move that takes the old moves as is and only modifies the moves of a robot IF a) the robot had to wait at a point in time and b)the move being looked at happens after the moment of waiting.
 Also for some reason the program doesn't show occurs and new_move anymore.
+
+# Upcoming
+A separate variable to keep track of how long each robot had to wait, which will play a role in handling priority for more than 2 robots (essentially a queue timer).
