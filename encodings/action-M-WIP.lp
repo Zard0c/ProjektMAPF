@@ -13,21 +13,33 @@ step_move(robot(R),D,T,0) :- plan_occurs(object(robot, R), action(move,D), T).
 move(R,D,T1,N) :- step_move(R,D,T1,N), collision(N,T2), T1>T2.
  
 collision(N+1,T) :- wait(_,T,N).
+collision(N+1,T) :- dodge(_,T,N).
 collision(0,0).
 
-%prioritising the robot with the lowest ID, so others have to wait in case of colision
+
+
+%COLLISION TYPE: 2 robots want to move to same field
+%SOLVING: robot with highest ID needs to wait
 
 wait(R2,T,N2) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C).
 
 
+%COLLISION TYPE: 2 robots want to swap places
+%SOLVING: robot with highest ID needs to dodge, moving it onto the same field in the next timestep
+%EXPECTED PROBLEMS: if robot with lower ID stops on the new field, needs to find a new path
+
+dodge(R2,T,N2) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), R2>R1, nextto(C1',D1,C2'), position(R2,C2',T-1), nextto(C2',D2,C1').
+
 %adjusting the plan(needing to include that T1 smaller horizon?
 
 step_move(R,D,T1+1,N+1) :- step_move(R,D,T1,N), wait(R,T,N), (T1+1)>T, horizon>T1.
+step_move(R,D,T1+2,N+1) :- step_move(R,D,T1,N), dodge(R,T,N), (T1+1)>T, horizon>(T1-1).
 
 
 %defining move/3
 
-move(R,D,T) :- move(R,D,T,N), not wait(R,T,N).
+move(R,D,T) :- move(R,D,T,N), not wait(R,T,N), not dodge(R,T,N).
+
 
 
 % - move/3 ----------------------------------------------------------------------
