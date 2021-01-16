@@ -13,7 +13,6 @@ step_move(robot(R),D,T,0) :- plan_occurs(object(robot, R), action(move,D), T).
 
 move(R,D,T,N) :- step_move(R,D,T,N), collision(R,T-1,N).
 
-
  
 collision(R,T,N+1) :- wait(R,T,N).
 collision(R,T,N+1) :- dodge_who(R,_,T,N).
