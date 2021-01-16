@@ -1,4 +1,1 @@
-occurs(object(robot,2),action(move,(0,1)),1)
-occurs(object(robot,2),action(move,(0,1)),2)
-occurs(object(robot,2),action(move,(0,1)),3)
-occurs(object(robot,2),action(move,(0,1)),4)
+plan_occurs(object(robot,2),action(move,(0,1)),1). plan_occurs(object(robot,2),action(move,(0,1)),2). plan_occurs(object(robot,2),action(move,(0,1)),3). plan_occurs(object(robot,2),action(move,(0,1)),4).
