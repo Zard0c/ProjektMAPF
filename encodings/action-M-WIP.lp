@@ -18,12 +18,13 @@ move(R,D,T,N) :- step_move(R,D,T,N), collision(R,T-1,N).
 collision(R,T,N+1) :- wait(R,T,N).
 collision(R,T,N+1) :- dodge_who(R,_,T,N).
 collision(R,T,N+1) :- nmc_dodge(R,T,N).
+collision(R,T,N+1) :- frd_where(R,_,T,N).
 collision(R,T+1,N) :- collision(R,T,N), not collision(R,T+1,N+1), horizon>T.
 collision(R,0,0) :- isRobot(R).
 
 
 %replaced by line 21 because more compact
-%collision(R,N,T) :- collision(R,N,T-1), not wait(R,T,N), not dodge_who(R,_,T,N), horizon>(T-1), not nmc_dodge(R,T,N).
+%collision(R,T+1,N) :- collision(R,T,N), not wait(R,T,N), not dodge_who(R,_,T,N), horizon>(T-1), not nmc_dodge(R,T,N), not frd_where(R,_,T,N).
 
 
 %COLLISION TYPE: 2 robots want to move to same field
@@ -34,7 +35,7 @@ wait(R2,T,N2) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), R2>R1
 
 %COLLISION TYPE: 2 robots want to swap places
 %SOLVING: robot with highest ID needs to dodge, moving it onto the same field in the next timestep
-%EXPECTED PROBLEMS: if robot with lower ID stops on the new field, needs to find a new path
+%EXPECTED PROBLEMS: if robot with lower ID stops on the new field, needs to find a new path, solved via nmc_dodge
 
 
 dodge_coll(R1,R2,T,N1,N2) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1,T-1), R2>R1, nextto(C1,D1,C2), position(R2,C2,T-1), nextto(C2,D2,C1).
@@ -56,7 +57,7 @@ dodge_where(R2,D,T) :- dodge_coll(R1,R2,T,N1,N2), direction(D), nextto(C2,D,C2')
 move(R,D,T) :- dodge_who(R,D,T,N).
 step_move(R,(X1,Y1),T+1,N+1) :- dodge_who(R,(-X1,-Y1),T,N), horizon>T.
 
-%COLLISION: dodge, but one robot ends on the return field
+%COLLISION: robot y dodges, but robot x finishes on the return field (m domain only)
 %SOLUTION: swapping return and next step_move
 %NoMoveCollision_dodge = nmc_dodge
 
@@ -66,6 +67,27 @@ nmc_dodge(R2,T,N) :- dodge_coll(R1,R2,T-1,_,_), position(R1,C1,T-1), move(R2,D,T
 
 move(R,D,T) :- step_move(R,D,T+1,N), nmc_dodge(R,T,N).
 step_move(R,D,T+1,N+1) :- step_move(R,D,T,N), nmc_dodge(R,T,N).
+
+%COLLISION: robot x finishes in path of robot y (m domain only)
+%SOLUTION: letting the finished robot dodge
+%FinishedRobot_dodge = fr_dodge; frd is flag to test if other doges exist
+
+frd(R1,R2,T,N1,N2) :- not dodge_coll(R1,R2,T1,N1,N2), time(T1), T1=T, not nmc_dodge(R2,T2,N), time(T2), T2=T, not nmc_dodge(R1,T3,N), time(T3), T3=T, isRobot(R1), isRobot(R2), collision(R2,T-1,N2), collision(R1,T-1,N1), col(N), R2>R1.
+
+fr_dodge(R1,R2,T,N1,N2) :- frd(R1,R2,T,N1,N2), move(R2,D2,T,N2), position(R1,C1,T-1), position(R2,C2,T-1), nextto(C2,D2,C1), not step_move(R1,_,T,_).
+
+fr_dodge(R2,R1,T,N2,N1) :- frd(R1,R2,T,N1,N2), move(R1,D1,T,N1), position(R1,C1,T-1), position(R2,C2,T-1), nextto(C1,D1,C2), not step_move(R2,_,T,_).
+
+%Rd: Robot who dodges; RM: robot who moves normally; ND, NM their respective collision dept
+
+1{frd_where(RD,D,T,ND) : direction(D), nextto(C1,D,C1'), position(RD,C1,T-1), position(RM,C2,T-1), C1'!=C2, step_move(RM,D2,T+1,NM), D!=D2}1 :- fr_dodge(RD,RM,T,ND,NM).
+
+move(R,D,T) :- frd_where(R,D,T,_).
+step_move(R,(X1,Y1),T+1,N+1) :- frd_where(R,(-X1,-Y1),T,N), horizon>T.
+
+
+%COLLISION: robot x is forced to dodge backwards, in direction of plan of robot y
+%SOLUTION: WIP
 
 
 %adjusting the plan(needing to include that T1 smaller horizon?
@@ -77,7 +99,7 @@ step_move(R,D,T1,N+1) :- step_move(R,D,T1,N), nmc_dodge(R,T,N), T1>(T+1), horizo
 
 %defining move/3
 
-move(R,D,T) :- move(R,D,T,N), not wait(R,T,N), not dodge_who(R,_,T,N), not nmc_dodge(R,T,N).
+move(R,D,T) :- move(R,D,T,N), not wait(R,T,N), not dodge_who(R,_,T,N), not nmc_dodge(R,T,N), not frd_where(R,_,T,N).
 
 
 
