@@ -12,24 +12,28 @@ lowest possible horizons (lph): As there exists no collision in this file, there
 
 # Benchmark 2
 This second file deals with the problem of two neighbouring robots colliding due to wanting to switch their positions, also known as edge collision.
+
 Our solution to this problem is to let a lower priority robot dodge in a direction perpendicular to its intended path to let the higher priority robot continue its move, then move back to the position it vacated and resume its own.
 
 lph: 5 originially for each robot, 7 in the merged plan.
 
 # Benchmark 3
 The third of our benchmarks concerns itself with the issue of one robot stopping for good in the path of another robot, having finished working through its instructions.
+
 In order to solve this problem, we simply let the finished robot dodge out of the way rather than have the moving robot calculate a path around the obstacle. In the following step, the dodging robot returns to its final position, while the moving robot continues on to its destination.
 
 lph: 2 and 4 for the robots, respectively, 4 in the merged plan.
 
 # Benchmark 4 
 Here we encounter a two-step problem. First, the robots trigger a vertex collision, after whose solution leads directly to the second part, namely an edge collision.
+
 The vertex collision is solved by simply making the lower priority robot wait a step. The following edge collision is then solved by making the robot that previously moved dodge out of the way, letting the previously waiting robot move ahead. The dodging robot them resumes its position in the following step and continues on.
 
 lph: 8 for both robots, 10 in the merged plan.
 
 # Benchmark 5
 The last of the original benchmarks deals with yet another vertex collision.
+
 As before, the solution is for the lower priority robot to wait a turn, then continue onwards.
 
 lph: 4 for both robots, 5 in the merged plan.
