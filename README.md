@@ -1,37 +1,44 @@
 # README
-This will be the place where we will upload our progress for the MAPF project (further description pending)
+This repository contains the files of the MAPF project, short for Multiple Agent Path-Finding, part of the University of Potsdam course "Knowledge Representation and Reasoning".
 
-Currently, there are 3 benchmarks in this repository. Each folder contains one "combined" instance with both robots and shelves placed, two "separate" instances, one per specific robot and intended shelf, in order to create their individual plans which are to be combined for the "combined" instance, as well as one already completed plan for each robot.
+It is split between our encodings, the basics of which were taken from the Asprilo seminar( also offered by the University of Potsdam) and then modified to suit our needs, and the list of benchmarks we use to test our code. Currently there are 5 benchmarks made by our group and 3 taken from other project groups for their uniqueness, with the first 5 being the former and the last 3 being the latter.
 
-We are using the encodings available in the potassco asprilo seminar, and we are currently modifying them to specifically work for our benchmarks.
+Note: As a baseline, the prioritization of robots is based on their collision depth, derived from how many collisions they have already been involved in and in how many of them they were the one allowed to move (clearer explanation pending). The robot ID is used purely as a tie breaker.
 
 # Benchmark 1
-bench_test_1 contains the most basic use case, it's not an actual benchmark for collision but rather being used to test whether or not the merging of plans works at all, and how it works exactly. Once I am done testing the basics it will be modified to also deal with a more interesting use case concerning collision detection, specifically a situation in which two robots wish to access the same square at the same time, forcing one to either wait or calculate a new route on the fly.
+This benchmark exists merely for testing purposes, in the sense that we use it to test whether current changes to our code negatively affect a benchmark that should run perfectly fine without any changes needed. In essence, it's here for us to see whether we broke something fundamental.
 
-horizons: robot_1 - 3; robot_2 - 3, instance_1 - 3
-
-REMINDER: THIS BENCHMARK WAS PURELY FOR TESTING WETHER OUR STRATEGY FOR MERGING PLANS WORKS, IT WAS NOT INTENDED TO BE A BENCHMARK FOR COLLISIONS. AN UPDATED 4th BENCHMARK WILL BE ADDED FOR THAT PURPOSE.
+lowest possible horizons (lph): As there exists no collision in this file, there is only one minimal horizon, namely 3.
 
 # Benchmark 2
-bench_test_2 is supposed to deal with the case where two robots want to switch places, meaning in practice, one of them has to calculate a new route to their target and vacate their spot for the other. Specifically, Robot 1 is assigned to Shelf 1, and Robot 2 is assigned to Shelf 2, with Robot 1 getting higher priority, meaning Robot 2 will have to calculate a new route and vacate their square.
+This second file deals with the problem of two neighbouring robots colliding due to wanting to switch their positions, also known as edge collision.
+Our solution to this problem is to let a lower priority robot dodge in a direction perpendicular to its intended path to let the higher priority robot continue its move, then move back to the position it vacated and resume its own.
 
-horizons: robot_1 - 5; robot_2 - 5; instance_2 (with predicted collision) - 5
+lph: 5 originially for each robot, 7 in the merged plan.
 
 # Benchmark 3
-bench_test_3 deals with the case where simply waiting a turn, like in future Benchmark 1, is not a valid solution anymore, and recalculation of the originally assigned plan is not merely an option but actually required. Robot 1 is meant to reach its goal early and stop moving, blocking the path of Robot 2, forcing it to adapt on the fly.
+The third of our benchmarks concerns itself with the issue of one robot stopping for good in the path of another robot, having finished working through its instructions.
+In order to solve this problem, we simply let the finished robot dodge out of the way rather than have the moving robot calculate a path around the obstacle. In the following step, the dodging robot returns to its final position, while the moving robot continues on to its destination.
 
-horizons: robot_1 - 2; robot_2 - 4, instance_3 (with predicted collision) - at least 6
+lph: 2 and 4 for the robots, respectively, 4 in the merged plan.
 
-# Benchmark 4 and 5
-These benchmarks are supposed to test the scenario where two robots want to access the same square at the same time. In 5 the solution will be to wait, in 4 one of the robots will have to find a new route.
+# Benchmark 4 
+Here we encounter a two-step problem. First, the robots trigger a vertex collision, after whose solution leads directly to the second part, namely an edge collision.
+The vertex collision is solved by simply making the lower priority robot wait a step. The following edge collision is then solved by making the robot that previously moved dodge out of the way, letting the previously waiting robot move ahead. The dodging robot them resumes its position in the following step and continues on.
 
-horizons bench_4: robot_1 - 8, robot_2 - 8, instance_4 - 8
-         bench_5: robot_1 - 4, robot_2 - 4, instance_5 - 5
+lph: 8 for both robots, 10 in the merged plan.
 
-# Encodings
-Here our encodings can be found. Currently, we are mostly working with the action-M.lp file, action-M.lp is the unmodified version, and two WIP versions exist, trying to deal with the collision where two robots access the same spot at the same time.
+# Benchmark 5
+The last of the original benchmarks deals with yet another vertex collision.
+As before, the solution is for the lower priority robot to wait a turn, then continue onwards.
+
+lph: 4 for both robots, 5 in the merged plan.
+
+# Benchmarks 6 to 8
+All relevant information on these imported benchmarks can be found on the respective githubs of their owners
+6  : https://github.com/tzschmidt/PlanMerger
+7,8: https://github.com/tramadan-up/asprilo-project
 
 # Current Developments
-
-# Upcoming
-Detailed instructions on how to run our benchmarks will be provided as soon as we are (reasonably) sure they work as we intend it. 
+Our current encodings are capable of solving all of our own benchmarks. Both bench6 and 7 should also work without issue.
+bench8 is still causing issues and modifications to our encodings will need to be made.
