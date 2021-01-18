@@ -36,7 +36,9 @@ lph: 4 for both robots, 5 in the merged plan.
 
 # Benchmarks 6 to 8
 All relevant information on these imported benchmarks can be found on the respective githubs of their owners 
+
 6  : https://github.com/tzschmidt/PlanMerger 
+
 7,8: https://github.com/tramadan-up/asprilo-project
 
 # Current Developments
