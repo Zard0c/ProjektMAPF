@@ -14,10 +14,10 @@ step_move(robot(R),D,T,0) :- plan_occurs(object(robot, R), action(move,D), T).
 move(R,D,T,N) :- step_move(R,D,T,N), collision(R,T-1,N).
 
  
-collision(R,T,N+1) :- wait(R,T,N).
-collision(R,T,N+1) :- dodge_who(R,_,T,N).
-%collision(R,T,N+1) :- nmc_dodge(R,T,N).
-%collision(R,T,N+1) :- frd_where(R,_,T,N).
+collision(R,T,N+1) :- wait(R,T,N), horizon>T.
+collision(R,T,N+1) :- dodge_who(R,_,T,N), horizon>T.
+%collision(R,T,N+1) :- nmc_dodge(R,T,N), horizon>T.
+collision(R,T,N+1) :- frd_where(R,_,T,N), horizon>T.
 collision(R,T+1,N) :- collision(R,T,N), not collision(R,T+1,N+1), horizon>T.
 collision(R,0,0) :- isRobot(R).
 
@@ -72,6 +72,22 @@ dodge_who(R2,D,T,N2) :- dodge_back(R2,D,T), dodge_coll(R1,R2,T,N1,N2), N1>=N2, n
 
 move(R,D,T) :- dodge_who(R,D,T,N).
 step_move(R,(X1,Y1),T+1,N+1) :- dodge_who(R,(-X1,-Y1),T,N), horizon>T.
+
+%COLLISION: robot x finishes in path of robot y (m domain only)
+%SOLUTION: letting the finished robot dodge
+%FinishedRobot_dodge = fr_dodge
+
+fr_dodge(R1,R2,T,N1,N2) :- move(R2,D2,T,N2), position(R1,C1,T-1), position(R2,C2,T-1), nextto(C2,D2,C1), not step_move(R1,_,T,_), not dodge_who(R2,_,T-1,_), collision(R1,T-1,N1).
+
+fr_dodge(R2,R1,T,N2,N1) :- move(R1,D1,T,N1), position(R1,C1,T-1), position(R2,C2,T-1), nextto(C1,D1,C2), not step_move(R2,_,T,_), not dodge_who(R1,_,T-1,_), collision(R2,T-1,N2).
+
+%Rd: Robot who dodges; RM: robot who moves normally; ND, NM their respective collision dept
+
+1{frd_where(RD,D,T,ND) : direction(D), nextto(C1,D,C1'), position(RD,C1,T-1), position(RM,C2,T-1), C1'!=C2, step_move(RM,D2,T+1,NM), D!=D2}1 :- fr_dodge(RD,RM,T,ND,NM).
+
+move(R,D,T) :- frd_where(R,D,T,_).
+step_move(R,(X1,Y1),T+1,N+1) :- frd_where(R,(-X1,-Y1),T,N), horizon>T.
+
 
 %adjusting the plan(needing to include that T1 smaller horizon?
 
