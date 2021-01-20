@@ -5,7 +5,7 @@
 #include "../encodings/action-M-WIP.lp".
 
 % Order fulfillment (Goal condition)
-#include "../encodings/goal-M.lp".
+%#include "../encodings/goal-M.lp".
 
 % Output conversion
 #include "../encodings/output-M.lp".
