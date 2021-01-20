@@ -46,5 +46,5 @@ All relevant information on these imported benchmarks can be found on the respec
 7,8: https://github.com/tramadan-up/asprilo-project
 
 # Current Developments
-Our current encodings are capable of solving all of our own benchmarks. Both bench6 and 7 should also work without issue.
-bench8 is still causing issues and modifications to our encodings will need to be made.
+Our current encodings are capable of solving all of our own benchmarks (ADDENDUM: We are experiencing some difficulty with benchmarks 2 and 3 at the moment). Both benchmark 6 and 7 are solvable by our encoding also.
+Benchmark 8 remains a problem.
