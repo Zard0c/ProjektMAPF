@@ -98,7 +98,7 @@ step_move(R,D,T1+2,N+1) :- step_move(R,D,T1,N), dodge_who(R,_,T,N), (T1+1)>T, ho
 
 %defining move/3
 
-move(R,D,T) :- move(R,D,T,N), not wait(R,T,N), not dodge_who(R,_,T,N).
+move(R,D,T) :- move(R,D,T,N), not wait(R,T,N), not dodge_who(R,_,T,N), not frd_where(R,D,T,_).
 
 
 
