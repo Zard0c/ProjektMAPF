@@ -1,0 +1,19 @@
+These are redundant lines and what they got replaced with for performance reasons:
+
+nmc_dodge(R1,T,N) :- dodge_coll(R1,R2,T-1,N-1,_), position(R1,C1,T-1), move(R1,D,T,N), position(R2,C2,T-1), not step_move(R2,_,T,_), nextto(C1,D,C2).
+
+nmc_dodge(R2,T,N) :- dodge_coll(R1,R2,T-1,_,N-1), position(R1,C1,T-1), move(R2,D,T,N), position(R2,C2,T-1), not step_move(R1,_,T,_), nextto(C2,D,C1).
+
+
+got replaced by
+
+nmc_dodge(R,T,N) :- dodge_who(R,_,T-1,N-1), position(R,C,T-1), move(R,D,T,N), nextto(C,D,C'), position(R',C',T-1), not step_move(R',_,T,_).
+
+
+got replaced because more compact
+
+collision(R,T+1,N) :- collision(R,T,N), not wait(R,T,N), not dodge_who(R,_,T,N), horizon>(T-1), not nmc_dodge(R,T,N), not frd_where(R,_,T,N).
+
+replaced by
+
+collision(R,T+1,N) :- collision(R,T,N), not collision(R,T+1,N+1), horizon>T.
