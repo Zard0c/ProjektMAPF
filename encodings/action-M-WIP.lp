@@ -16,7 +16,7 @@ move(R,D,T,N) :- step_move(R,D,T,N), collision(R,T-1,N).
  
 collision(R,T,N+1) :- wait(R,T,N), horizon>T.
 collision(R,T,N+1) :- dodge_who(R,_,T,N), horizon>T.
-%collision(R,T,N+1) :- nmc_dodge(R,T,N), horizon>T.
+collision(R,T,N+1) :- nmc_dodge(R,T,N), horizon>T.
 collision(R,T,N+1) :- frd_where(R,_,T,N), horizon>T.
 collision(R,T+1,N) :- collision(R,T,N), not collision(R,T+1,N+1), horizon>T.
 collision(R,0,0) :- isRobot(R).
@@ -60,9 +60,9 @@ dodge_who(R2,D,T,N2) :- dodge_back(R2,D,T), dodge_coll(R1,R2,T,N1,N2), N1>=N2, n
 
 %if one robot dodged backwards in T-1 and tunnel continues
 
-%dodge_who(R1,D,T,N1) :- dodge_back(R1,D,T), dodge_back(R1,_,T-1), dodge_coll(R1,R2,T,N1,N2).
+dodge_who(R1,D,T,N1) :- dodge_back(R1,D,T), dodge_back(R1,_,T-1), dodge_coll(R1,R2,T,N1,N2).
 
-%dodge_who(R2,D,T,N2) :- dodge_back(R2,D,T), dodge_back(R2,_,T-1), dodge_coll(R1,R2,T,N1,N2).
+dodge_who(R2,D,T,N2) :- dodge_back(R2,D,T), dodge_back(R2,_,T-1), dodge_coll(R1,R2,T,N1,N2).
 
 %if robot dodged backwards in T-1 and tunnel ended
 
@@ -81,24 +81,31 @@ fr_dodge(R1,R2,T,N1,N2) :- move(R2,D2,T,N2), position(R1,C1,T-1), position(R2,C2
 
 fr_dodge(R2,R1,T,N2,N1) :- move(R1,D1,T,N1), position(R1,C1,T-1), position(R2,C2,T-1), nextto(C1,D1,C2), not step_move(R2,_,T,_), not dodge_who(R1,_,T-1,_), collision(R2,T-1,N2).
 
-%Rd: Robot who dodges; RM: robot who moves normally; ND, NM their respective collision dept
+%RD: Robot who dodges; RM: robot who moves normally; ND, NM their respective collision dept
 
 1{frd_where(RD,D,T,ND) : direction(D), nextto(C1,D,C1'), position(RD,C1,T-1), position(RM,C2,T-1), C1'!=C2, step_move(RM,D2,T+1,NM), D!=D2}1 :- fr_dodge(RD,RM,T,ND,NM).
 
 move(R,D,T) :- frd_where(R,D,T,_).
 step_move(R,(X1,Y1),T+1,N+1) :- frd_where(R,(-X1,-Y1),T,N), horizon>T.
 
+%COLLISION: robot can't return to the spot it dodged from (m domain only)
+%SOLUTION: reshuffling of robot moves
+%NoMoveCollision_dodge = nmc_dodge
+
+nmc_dodge(R,T,N) :- dodge_who(R,_,T-1,N-1), position(R,C,T-1), move(R,D,T,N), nextto(C,D,C'), position(R',C',T-1), not step_move(R',_,T,_).
+move(R,D,T) :- step_move(R,D,T+1,N), nmc_dodge(R,T,N).
+step_move(R,D,T+1,N+1):- step_move(R,D,T,N), nmc_dodge(R,T,N).
 
 %adjusting the plan(needing to include that T1 smaller horizon?
 
 step_move(R,D,T1+1,N+1) :- step_move(R,D,T1,N), wait(R,T,N), (T1+1)>T, horizon>T1.
 step_move(R,D,T1+2,N+1) :- step_move(R,D,T1,N), dodge_who(R,_,T,N), (T1+1)>T, horizon>(T1-1).
-%step_move(R,D,T1,N+1) :- step_move(R,D,T1,N), nmc_dodge(R,T,N), T1>(T+1), horizon>T1.
+step_move(R,D,T1,N+1) :- step_move(R,D,T1,N), nmc_dodge(R,T,N), T1>(T+1), horizon>T1.
 
 
 %defining move/3
 
-move(R,D,T) :- move(R,D,T,N), not wait(R,T,N), not dodge_who(R,_,T,N), not frd_where(R,D,T,_).
+move(R,D,T) :- move(R,D,T,N), not wait(R,T,N), not dodge_who(R,_,T,N), not frd_where(R,D,T,_), not nmc_dodge(R,T,N).
 
 
 
@@ -118,4 +125,3 @@ moveto(C',C,T) :- nextto(C',D,C), position(R,C',T-1), move(R,D,T).
 
 % - auxiliaries -----------------------------------------------------------------
 % :- { position(R,C,T) } != 1, isRobot(R), time(T).    % REDUNDANT but PERFORMANT?
- 
