@@ -70,7 +70,7 @@ move(R,D,T) :- dodge_who(R,D,T,N).
 step_move(R,(X1,Y1),T+1,N+1) :- dodge_who(R,(-X1,-Y1),T,N), horizon>T.
 
 
-%COLLISION: robot x finishes in path of robot y (m domain only)
+%COLLISION TYPE: robot x finishes in path of robot y (m domain only)
 %SOLUTION: letting the finished robot dodge
 %FinishedRobot_dodge = fr_dodge
 
@@ -87,7 +87,7 @@ move(R,D,T) :- frd_where(R,D,T,_).
 step_move(R,(X1,Y1),T+1,N+1) :- frd_where(R,(-X1,-Y1),T,N), horizon>T.
 
 
-%COLLISION: robot can't return to the spot it dodged from (m domain only)
+%COLLISION TYPE: robot can't return to the spot it dodged from (m domain only)
 %SOLUTION: reshuffling of 2 moves in the dodging robot
 %NoMoveCollision_dodge = nmc_dodge
 
