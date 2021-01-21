@@ -17,3 +17,9 @@ collision(R,T+1,N) :- collision(R,T,N), not wait(R,T,N), not dodge_who(R,_,T,N),
 replaced by
 
 collision(R,T+1,N) :- collision(R,T,N), not collision(R,T+1,N+1), horizon>T.
+
+Changed wait/3, frm_dodge/4, dodge_who/4, nmc_dodge/3 to
+wait/2, frm_dodge/3, dodge_who/3, nmc_dodge/2
+
+through removing the Collision dept in each of them. in the same way, dodge_coll/5 to /3
+fr_dodge/5 to /3; 
