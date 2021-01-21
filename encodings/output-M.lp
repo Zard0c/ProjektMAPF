@@ -3,7 +3,7 @@
 
 %next lines for testing purpouses of specific code constraints
 %#show wait/3.
-#show step_move/4.
+%#show step_move/4.
 %#show move/4.
 %#show move/3.
 %#show collision/3.
