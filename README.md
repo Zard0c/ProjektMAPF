@@ -51,5 +51,4 @@ This is a smaller version of benchmark 4, which takes too long to calculate for 
 lph: 3 for both robots, 5 in the merged plan.
 
 # Current Developments
-Our current encodings are capable of solving all of our own benchmarks (ADDENDUM: We are experiencing some difficulty with benchmarks 2 and 3 at the moment). Both benchmark 6 and 7 are solvable by our encoding also.
-Benchmark 8 remains a problem.
+All benchmarks aside from 8 are currently solvable.
