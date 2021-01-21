@@ -14,7 +14,7 @@ lowest possible horizons (lph): As there exists no collision in this file, there
 This second file deals with the problem of two neighbouring robots colliding due to wanting to switch their positions, also known as edge collision.
 
 Our solution to this problem is to let a lower priority robot dodge in a direction perpendicular to its intended path to let the higher priority robot continue its move, then move back to the position it vacated and resume its own.
-
+EDIT: redo this part, somewhat inaccurate description.
 lph: 5 originially for each robot, 7 in the merged plan.
 
 # Benchmark 3
