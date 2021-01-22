@@ -1,0 +1,10 @@
+Benchmarks		avg Time over 10 runs Model 1		avg CPU Time 10 runs Model 1
+	1			    0.0532				   
+	2			    2.9286					
+	3			    0.0738					
+	4			     N/A						
+	5			    0.4469					
+	6			    0.6317					
+	7			    5.5766					
+	8			     N/A					
+	9			    0.4227
