@@ -2,10 +2,10 @@
 #include "./plan_r1.lp".
 #include "./plan_r2.lp".
 % Move actions
-#include "../encodings/action-M-WIP.lp".
+#include "../../../../encodings/M-Domain/action-M-WIP.lp".
 
 % Order fulfillment (Goal condition)
-%#include "../encodings/goal-M.lp".
+#include "../../../../encodings/M-Domain/goal-M.lp".
 
 % Output conversion
-#include "../encodings/output-M.lp".
+#include "../../../../encodings/M-Domain/output-M.lp".
