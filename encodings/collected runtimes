@@ -1,16 +1,17 @@
 Model 1: The encoding we presented in the meeting on Thursday, 21 of January, which ran into time outs for benchmark 4.
 Model 2: Model 1, except modified according to the advice given on the 21 of January meeting.
+Model o(ld): Model 1 before the modifications for frd and nmc dodges.
 
 Each benchmark is run a total of 10 times per model and an average value calculated from the results. The times are always given in seconds.
 
 Times:
-    Benchmark			    Model 1		Model 2
-	1			    0.0532		0.0510		   
-	2			    2.9286		1.7980			
-	3			    0.0738		0.0741			
-	4			     N/A		17.0469				
-	5			    0.4469		0.1990			
-	6			    0.6317		0.3012			
-	7			    5.5766		1.5825			
-	8			     N/A		  N/A			
-	9			    0.4227		0.1782
+    Benchmark			    Model o	Model 1		Model 2
+	1			    0.0219	0.0532		0.0510		   
+	2			     N/A	2.9286		1.7980			
+	3			     N/A	0.0738		0.0741			
+	4			    1.7808	 N/A		17.0469				
+	5			    0.0218	0.4469		0.1990			
+	6			    0.0739	0.6317		0.3012			
+	7			    0.6365	5.5766		1.5825			
+	8			     N/A	 N/A		  N/A			
+	9			    0.1096	0.4227		0.1782
