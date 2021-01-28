@@ -4,7 +4,8 @@ current status of project: all but one benchmark is solvable, only straight tunn
 further, modifications(removal of col dept N in wait, frd, dodge and nmc) of the code (21.01.2021) vastly improved runtimes on all but 2 benchmarks
 next objective: expand into the A domain
                   -create new benchmarks/modify old ones to include packing stations
-
+                add more robots
+                  -new benches, modify code to adapt the wait flag
 quick summary of events so far: managed to merge plans without collision, struggled to merge plans with collisions (reason: missing variable for tracking col depth as 
 unique identifier), added said modifier after Christmas holidays, added proper dodge commands, modified dodge commands for edge cases (robot finishes in regular path,
 robot finishes in path of a dodge return), modified encoding to remove col depth from wait(), frd(), dodge() and nmc() and started taking calculation times
