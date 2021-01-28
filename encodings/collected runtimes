@@ -1,6 +1,6 @@
 Model 1: The encoding we presented in the meeting on Thursday, 21 of January, which ran into time outs for benchmark 4.
 Model 2: Model 1, except modified according to the advice given on the 21 of January meeting.
-Model o(ld): Model 1 before the modifications for frd and nmc dodges
+Model o(ld): Model 1 before the modifications for frd and nmc dodges.
 
 Each benchmark is run a total of 10 times per model and an average value calculated from the results. The times are always given in seconds.
 
