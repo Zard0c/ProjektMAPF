@@ -25,7 +25,31 @@ collision(R,0,0) :- isRobot(R).
 %COLLISION TYPE: 2 robots want to move to same field (vertex collision)
 %SOLUTION: robot with highest ID needs to wait
 
-wait(R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C).
+%wait(R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C).
+
+
+%the first flag checks for the robot's collision depth. The one with greater depth has higher priority. the second flag is a tiebreaker based on robot ID in case both have the same col depth.
+%not dodge_who(R2) because wait is not allowed to take precedence over a dodge command
+wait(R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N1>N2, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C), not dodge_who(R2,_,T).
+
+%the not dodge_who(R1) is to make sure they don't wait for someone who isn't coming anyway because they had to dodge rather than move
+wait(R2,T) :- move(R1,D1,T,N), move(R2,D2,T,N), position(R1,C1',T-1), R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C), not dodge_who(R2,_,T), not dodge_who(R1,_,T).
+
+%introduce a wait for a robot waiting for its spot to be vacated by another robot who also triggered a wait
+wait(R2,T) :- move(R2,D2,T,N), position(R2,C2',T-1), nextto(C2',D2,C), position(R1,C,T-1), wait(R1,T).
+
+%wait Prototypes START
+%the following line is a prototype for the case of a robot dodging and potentially being forced to wait and therefore unable to return to its spot due to lower prio because of another robot (can't currently be tested due to no benchmark for this scenario).
+%currently causes odd behaviour
+%wait(R1,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N1>=N2, R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C), dodge_who(R2,_,T-1).
+
+%idea: robot with greater col dept waits if another robot with lower col dept wants to return to vacated spot
+%wait(R1,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N1>N2, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C), dodge_who(R2,_,T-1).
+
+
+%idea: a robot with higher priority has to wait if a robot had to dodge in the direction the higher prio robot wants to go, in its path
+%wait(R1,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), position(R2,C2',T-1), N1>N2, nextto(C1',D1,C), nextto(C2',D2,C), dodge_who(R3,D1,T), position(R3,C,T-1), position(R3,C3',T), nextto(C,D1,C3').
+%wait Prototypes END
 
 
 %COLLISION TYPE: 2 robots want to swap places (edge collision)
