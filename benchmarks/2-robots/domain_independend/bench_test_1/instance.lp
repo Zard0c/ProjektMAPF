@@ -43,7 +43,9 @@ init(object(shelf,1), value(at,(4,3))).
 init(object(product,1),value(on,(1,1))).
 init(object(shelf,2), value(at,(1,2))).
 init(object(product,2),value(on,(2,1))).
-init(object(order,1),value(pickingStation,0)).
+init(object(pickingStation,1), value(at,(4,4))).
+init(object(pickingStation,2), value(at,(1,1))).
+init(object(order,1),value(pickingStation,1)).
 init(object(order,1),value(line,(1,1))).
-init(object(order,2),value(pickingStation,0)).
+init(object(order,2),value(pickingStation,2)).
 init(object(order,2),value(line,(2,1))).

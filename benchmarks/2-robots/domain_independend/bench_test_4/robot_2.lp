@@ -56,5 +56,6 @@ init(object(robot,2), value(max_energy,0)).
 init(object(robot,2), value(energy,0)).
 init(object(shelf,2), value(at,(1,1))).
 init(object(product,2),value(on,(2,1))).
-init(object(order,2),value(pickingStation,0)).
+init(object(pickingStation,2), value(at,(1,2))).
+init(object(order,2),value(pickingStation,2)).
 init(object(order,2),value(line,(2,1))).
