@@ -8,4 +8,4 @@ cp ./benchmarks/2-robots/M-domain_only/bench_test_2/encoding.lp ./lab/instances/
 
 ./encodings/scripts/plan_creater/plan_create_2_M.sh
 
-clingo --out-atomf="%s." -V0 -c horizon=4 ./lab/instances/encoding_2_M.lp ./lab/instances/instance_2.lp | grep object > ./lab/results/result_2_M.lp
+clingo --out-atomf="%s." -V0 -c horizon=7 ./lab/instances/encoding_2_M.lp ./lab/instances/instance_2.lp | grep object > ./lab/results/result_2_M.lp
