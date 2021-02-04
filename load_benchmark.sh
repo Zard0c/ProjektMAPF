@@ -15,7 +15,6 @@ echo "To load a benchmark, choose the amount of robots, the domain which should 
 echo "You can go back one step by choosing Back, or leave midway by choosing Quit"
 echo "the A-domain is still WIP"
 
-echo $ROB
 select rob in "${robots[@]}"; do
 	case $rob in
 		"2 Robots")
@@ -271,6 +270,8 @@ select rob in "${robots[@]}"; do
 						;;
 					"A-Domain")
 						echo "loading all benchmarks for the M domain into lab"
+						./encodings/scripts/loader/load_bench_1_A.sh
+						./encodings/scripts/loader/load_bench_4_A.sh
 						exit
 						;;
 					"Both Domains")
