@@ -121,18 +121,22 @@ select rob in "${robots[@]}"; do
 								"Benchmark 1")
 									echo "loading benchmark 1 into lab"
 									./encodings/scripts/loader/load_bench_1_M.sh
+									./encodings/scripts/loader/load_bench_1_A.sh
 									;;
 								"Benchmark 4")
 									echo "loading benchmark 4 into lab"
 									./encodings/scripts/loader/load_bench_4_M.sh
+									./encodings/scripts/loader/load_bench_4_A.sh
 									;;
 								"Benchmark 6")
 									echo "loading benchmark 6 into lab"
 									./encodings/scripts/loader/load_bench_6_M.sh
+									./encodings/scripts/loader/load_bench_6_A.sh
 									;;
 								"Benchmark 7")
 									echo "loading benchmark 7 into lab"
 									./encodings/scripts/loader/load_bench_7_M.sh
+									./encodings/scripts/loader/load_bench_7_A.sh
 									;;
 								"Back")
 									break
@@ -269,13 +273,16 @@ select rob in "${robots[@]}"; do
 						exit
 						;;
 					"A-Domain")
-						echo "loading all benchmarks for the M domain into lab"
+						echo "loading all benchmarks for the A domain into lab"
 						./encodings/scripts/loader/load_bench_1_A.sh
 						./encodings/scripts/loader/load_bench_4_A.sh
+						./encodings/scripts/loader/load_bench_6_A.sh
+						./encodings/scripts/loader/load_bench_7_A.sh
 						exit
 						;;
 					"Both Domains")
 						echo "loading all benchmarks into lab"
+					#M-Domain
 						./encodings/scripts/loader/load_bench_1_M.sh
 						./encodings/scripts/loader/load_bench_2_M.sh
 						./encodings/scripts/loader/load_bench_3_M.sh
@@ -288,6 +295,11 @@ select rob in "${robots[@]}"; do
 						./encodings/scripts/loader/load_bench_10_M.sh
 						./encodings/scripts/loader/load_bench_11_M.sh
 						./encodings/scripts/loader/load_bench_12_M.sh
+					#A-Domain
+						./encodings/scripts/loader/load_bench_1_A.sh
+						./encodings/scripts/loader/load_bench_4_A.sh
+						./encodings/scripts/loader/load_bench_6_A.sh
+						./encodings/scripts/loader/load_bench_7_A.sh
 						exit
 						;;
 					"Back")
