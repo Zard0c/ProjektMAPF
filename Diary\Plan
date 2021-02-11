@@ -9,3 +9,7 @@ next objective: expand into the A domain
 quick summary of events so far: managed to merge plans without collision, struggled to merge plans with collisions (reason: missing variable for tracking col depth as 
 unique identifier), added said modifier after Christmas holidays, added proper dodge commands, modified dodge commands for edge cases (robot finishes in regular path,
 robot finishes in path of a dodge return), modified encoding to remove col depth from wait(), frd(), dodge() and nmc() and started taking calculation times
+(04.02.2021) finished a plan creater for the A-Domain (without quantities)
+adjusted bench 1,4,6,7 to include packing stations.
+bench 6 will result in an interessting problem during the merger, cause robot with shelf goes over shelf without robot
+bench 7 will result in robot needing to dodge, who has no spaces to move to
