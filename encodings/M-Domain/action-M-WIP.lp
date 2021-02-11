@@ -36,7 +36,7 @@ wait(R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N1>N2, n
 wait(R2,T) :- move(R1,D1,T,N), move(R2,D2,T,N), position(R1,C1',T-1), R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C), not dodge_who(R2,_,T), not dodge_who(R1,_,T).
 
 %introduce a wait for a robot waiting for its spot to be vacated by another robot who also triggered a wait
-wait(R2,T) :- move(R2,D2,T,N), position(R2,C2',T-1), nextto(C2',D2,C), position(R1,C,T-1), wait(R1,T).
+wait(R2,T) :- move(R2,(DX,DY),T,N), position(R2,C2',T-1), nextto(C2',(DX,DY),C), position(R1,C,T-1), wait(R1,T), not move(R1,(-DX,-DY),T,_).
 
 %wait Prototypes START
 %the following line is a prototype for the case of a robot dodging and potentially being forced to wait and therefore unable to return to its spot due to lower prio because of another robot (can't currently be tested due to no benchmark for this scenario).
