@@ -6,7 +6,7 @@ robots=("2 Robots" "3 Robots" "All" "Quit")
 domain=("M-Domain" "A-Domain" "Both Domains" "Back" "Quit")
 ben2M=("Benchmark 1" "Benchmark 2" "Benchmark 3" "Benchmark 4" "Benchmark 5" "Benchmark 6" "Benchmark 7" "Benchmark 8" "Benchmark 9" "Back" "Quit")
 ben2O=("Benchmark 1" "Benchmark 4" "Benchmark 6" "Benchmark 7" "Back" "Quit")
-ben2A=("Benchmark 1" "Benchmark 4" "Benchmark 6" "Benchmark 7" "Back" "Quit")
+ben2A=("Benchmark 1" "Benchmark 4" "Benchmark 6" "Benchmark 7" "Benchmark 17" "Back" "Quit")
 ben3M=("Benchmark 10" "Benchmark 11" "Benchmark 12" "Back" "Quit")
 ben3O=("Back" "Quit")
 ben3A=("Back" "Quit")
@@ -99,6 +99,10 @@ select rob in "${robots[@]}"; do
 								"Benchmark 7")
 									echo "loading benchmark 7 into lab"
 									./encodings/scripts/loader/load_bench_7_A.sh
+									;;
+								"Benchmark 17")
+									echo "loading benchmark 17 into lab"
+									./encodings/scripts/loader/load_bench_17_A.sh
 									;;
 								"Back")
 									break
@@ -278,6 +282,7 @@ select rob in "${robots[@]}"; do
 						./encodings/scripts/loader/load_bench_4_A.sh
 						./encodings/scripts/loader/load_bench_6_A.sh
 						./encodings/scripts/loader/load_bench_7_A.sh
+						./encodings/scripts/loader/load_bench_17_A.sh
 						exit
 						;;
 					"Both Domains")
@@ -300,6 +305,7 @@ select rob in "${robots[@]}"; do
 						./encodings/scripts/loader/load_bench_4_A.sh
 						./encodings/scripts/loader/load_bench_6_A.sh
 						./encodings/scripts/loader/load_bench_7_A.sh
+						./encodings/scripts/loader/load_bench_17_A.sh
 						exit
 						;;
 					"Back")
