@@ -73,11 +73,23 @@ dodge_where(R2,D,T) :- dodge_coll(R1,R2,T), direction(D), nextto(C2,D,C2'), posi
 %dodge_back(R2,D,T) :- dodge_coll(R1,R2,T,N1,N2), not dodge_where(R1,_,T), step_move(R1,D,T+1,N1), not dodge_where(R2,_,T).
 %END
 
+%if robot can't dodge
+no_dodge(R1,T) :- not dodge_where(R1,_,T), dodge_coll(R1,R2,T), dodge_where(R2,_,T).
+no_dodge(R2,T) :- not dodge_where(R2,_,T), dodge_coll(R1,R2,T), dodge_where(R1,_,T).
+:- no_dodge(R,T), dodge_where(R,_,T).
+
+%if found areas to dodge to are actually occupied by robot
+occ_dodge(R1,T) :- dodge_where(R1,D,T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T), nextto(C1,D,C3), R3!=R2, R3!=R1.
+occ_dodge(R2,T) :- dodge_where(R2,D,T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T), nexxto(C2,D,C3), R3!=R2, R3!=R1.
+
+
 %deciding who dodges, if no one dodged backwards in T-1
-1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), N2>N1, not dodge_back(R2,_,T-1), collision(R1,T-1,N1), collision(R2,T-1,N2).
-1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), N1>=N2, not dodge_back(R1,_,T-1), collision(R1,T-1,N1), collision(R2,T-1,N2).
-%dodge_who(R1,D,T,N1) :- dodge_back(R1,D,T), dodge_coll(R1,R2,T,N1,N2), N2>N1,  not dodge_back(R2,_,T-1).
-%dodge_who(R2,D,T,N2) :- dodge_back(R2,D,T), dodge_coll(R1,R2,T,N1,N2), N1>=N2, not dodge_back(R1,_,T-1).
+1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), N2>N1, collision(R1,T-1,N1), collision(R2,T-1,N2), not no_dodge(R1,T),not no_dodge(R2,T), not occ_dodge(R1,T).
+1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), N1>=N2, collision(R1,T-1,N1), collision(R2,T-1,N2), not no_dodge(R1,T), not no_dodge(R2,T), not occ_dodge(R2,T).
+1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), occ_dodge(R1,T).
+1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), occ_dodge(R2,T).
+1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), no_dodge(R2,T).
+1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), no_dodge(R1,T).
 
 %ALSO EXPERIMENTAL, SEE TWO ABOVE
 %if one robot dodged backwards in T-1 and tunnel continues
@@ -147,10 +159,10 @@ position(R,C,T) :- position(R,C,T-1), not move(R,_,T), isRobot(R), time(T).
 
 % - edge collision --------------------------------------------------------------
 moveto(C',C,T) :- nextto(C',D,C), position(R,C',T-1), move(R,D,T).
-% :- moveto(C',C,T), moveto(C,C',T), C < C'.
+:- moveto(C',C,T), moveto(C,C',T), C < C'.
 
 % - vertex collision ------------------------------------------------------------
-% :- { position(R,C,T) : isRobot(R) }  > 1, position(C), time(T).
+:- { position(R,C,T) : isRobot(R) }  > 1, position(C), time(T).
 
 % - auxiliaries -----------------------------------------------------------------
-% :- { position(R,C,T) } != 1, isRobot(R), time(T).    % REDUNDANT but PERFORMANT?
+:- { position(R,C,T) } != 1, isRobot(R), time(T).    % REDUNDANT but PERFORMANT?
