@@ -13,3 +13,5 @@ robot finishes in path of a dodge return), modified encoding to remove col depth
 adjusted bench 1,4,6,7 to include packing stations.
 bench 6 will result in an interessting problem during the merger, cause robot with shelf goes over shelf without robot
 bench 7 will result in robot needing to dodge, who has no spaces to move to
+(11.02.2021) solved problem for bench 7, started no shelf collision, between one robot, thats carrying a shelf and a standing shelf.
+(17.02.2021)nearly finished shelf collision, but having a small timelag for bench 6, it's one timestep thats not getting used, still under investigation
