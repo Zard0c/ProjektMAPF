@@ -6,6 +6,9 @@
 %#show pickup/3.
 %#show putdown/3.
 %#show carries/3.
+%#show s_end/2.
+%#show s_coll/2.
+%#show move/3.
 
 #show occurs(object(robot,R), action(move,D),     T) :    move(robot(R),D,T).
 #show occurs(object(robot,R), action(pickup,object(shelf,S)),   T) :    pickup(robot(R),shelf(S),T).

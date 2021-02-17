@@ -17,6 +17,7 @@ move(R,D,T,N) :- step_move(R,D,T,N), collision(R,T-1,N).
 %define collision and collision depth N, increase col depth for every wait and different kind of dodge 
 collision(R,T,N+1) :- wait(R,T), collision(R,T-1,N), horizon>T.
 collision(R,T,N+1) :- dodge_who(R,_,T), collision(R,T-1,N), horizon>T.
+collision(R,T,N+1) :- s_coll(R,T), collision(R,T-1,N), horizon>T.
 collision(R,T+1,N) :- collision(R,T,N), not collision(R,T+1,N+1), horizon>T.
 collision(R,0,0) :- isRobot(R).
 
@@ -31,7 +32,7 @@ wait(R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N1>=N2, 
 
 
 %COLLISION TYPE: 2 robots want to swap places (edge collision)
-%SOLUTION: robot with higher ID needs to vacate its spot, then return to it in the next step
+
 
 %definition of the collision type
 dodge_coll(R1,R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1,T-1), R2>R1, nextto(C1,D1,C2), position(R2,C2,T-1), nextto(C2,D2,C1).
@@ -82,13 +83,56 @@ step_putdown(R,S,T1+2,N+1) :- step_putdown(R,S,T1,N), dodge_who(R,_,T), collisio
 
 
 
+
+
+
+
+
+
+
 %shelf collision
 
-%s_coll(R,T) :- move(R,D,T,_), position(S',C',T-1), position(R,C,T-1), nextto(C,D,C'), carries(R,S,T-1), isShelf(S').
+s_coll(R,T) :- move(R,D,T,_), position(S',C',T-1), position(R,C,T-1), nextto(C,D,C'), carries(R,S,T-1), isShelf(S'), not carries(_,S',T).
 
-%s_wait(R,T) :- s_coll(R,T), step_move(R,(-X,-Y),T+1,N), move(R,(X,Y),T,N).
-% s_str_dodge(R,T) :- s_coll(R,T), step_move(R,D1,T+1,N), move(R,D,T,N), D1 == D.
-%s_corn_dodge(R,T) :- s_coll(R,T), step_move(R,D1,T+1,N), move(R,D,T,N), D1 != D, not s_wait(R,T).
+s_wait(R,T) :- s_coll(R,T), step_move(R,(-X,-Y),T+1,N), move(R,(X,Y),T,N).
+ s_str_dodge(R,T) :- s_coll(R,T), step_move(R,D1,T+1,N), move(R,D,T,N), D1 == D.
+s_corn_dodge(R,T) :- s_coll(R,T), step_move(R,D1,T+1,N), move(R,D,T,N), D1 != D, not s_wait(R,T).
+
+
+
+
+%adjusting the move for the shelf collision with corn dodge
+
+%move(R,D,T) :- step_move(R,D,T+1,N), collision(R,T-1,N), s_corn_dodge(R,T).
+step_move(R,D,T+1,N+1) :- move(R,D,T,N), s_corn_dodge(R,T).
+
+%step_move(R,D,T1+2,N+1) :- step_move(R,D,T1,N), s_corn_dodge(R,T), (T1+1)>T, collision(R,T-1,N), horizon>(T1-1).
+
+%step_pickup(R,S,T1+2,N+1) :- step_pickup(R,S,T1,N), s_corn_dodge(R,T), collision(R,T-1,N),(T1+1)>T, horizon>(T1-1).
+
+%step_putdown(R,S,T1+2,N+1) :- step_putdown(R,S,T1,N), s_corn_dodge(R,T), collision(R,T-1,N),(T1+1)>T, horizon>(T1-1).
+
+
+%adjusting the move for the shelf collision with str dodge
+
+move(R,(X1,Y1),T) :- direction((X1,Y1)), move(R,(X,Y),T,N), s_str_dodge(R,T), (X1,Y1) != (X,Y), (X1,Y1) != (-X,-Y).
+
+step_move(R,D,T1+1,N+1) :- step_move(R,D,T1,N), move(R,D,T,N), collision(R,T-1,N), T1>(T-1), (T+2)>T1, s_str_dodge(R,T).
+step_move(R,(-X,-Y),T+3,N+1) :- move(R,(X,Y),T), move(R,_,T,N), s_str_dodge(R,T).
+
+%pushing the plan back
+
+step_move(R,D,T1+2,N+1) :- step_move(R,D,T1,N), s_str_dodge(R,T), T1>(T+1), collision(R,T-1,N), horizon>(T1-1).
+
+step_pickup(R,S,T1+2,N+1) :- step_pickup(R,S,T1,N), s_str_dodge(R,T), collision(R,T-1,N),T1>(T+1), horizon>(T1-1).
+
+step_putdown(R,S,T1+2,N+1) :- step_putdown(R,S,T1,N), s_str_dodge(R,T), collision(R,T-1,N),T1>(T+1), horizon>(T1-1).
+
+%shelf stands at putdown square square
+
+s_end(R,T) :- s_coll(R,T), not step_move(R,_,T+1,N), collision(R,T-1,N).
+
+1{move(R,D,T) : direction(D), D!=D'}1 :- s_end(R,T), move(R,D',T,N), collision(R,T-1,N).
 
 
 
@@ -98,15 +142,15 @@ putdown(R,S,T) :- step_putdown(R,S,T,N), collision(R,T-1,N).
 
 
 %defining move/3
-move(R,D,T) :- move(R,D,T,N), not wait(R,T), not dodge_who(R,_,T).
+move(R,D,T) :- move(R,D,T,N), not wait(R,T), not dodge_who(R,_,T), not s_coll(R,T).
 
 
 
 
 
-{    move(R,D,T) : direction(D);
+{  move(R,D,T,N) : direction(D);
    pickup(R,S,T) :   isShelf(S);
-  putdown(R,S,T) :   isShelf(S)} 1 :- isRobot(R), time(T), not step_move(R,_,T,_).
+  putdown(R,S,T) :   isShelf(S)} 1 :- isRobot(R), time(T), not step_move(R,_,T,N), not step_pickup(R,_,T,N), not step_putdown(R,_,T,N), collision(R,T-1,N).
 
 
 
