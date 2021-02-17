@@ -80,7 +80,7 @@ no_dodge(R2,T) :- not dodge_where(R2,_,T), dodge_coll(R1,R2,T), dodge_where(R1,_
 
 %if found areas to dodge to are actually occupied by robot
 occ_dodge(R1,T) :- dodge_where(R1,D,T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T), nextto(C1,D,C3), R3!=R2, R3!=R1.
-occ_dodge(R2,T) :- dodge_where(R2,D,T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T), nexxto(C2,D,C3), R3!=R2, R3!=R1.
+occ_dodge(R2,T) :- dodge_where(R2,D,T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T), nextto(C2,D,C3), R3!=R2, R3!=R1.
 
 
 %deciding who dodges, if no one dodged backwards in T-1
