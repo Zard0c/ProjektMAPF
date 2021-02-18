@@ -42,6 +42,3 @@ All relevant information on these imported benchmarks can be found on the respec
 This is a smaller version of benchmark 4, which takes too long to calculate for our liking with our current code.
   
 lph: 3 for both robots, 5 in the merged plan.
-
-# Current Developments
-All benchmarks aside from 8 are currently solvable.
