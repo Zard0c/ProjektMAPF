@@ -4,7 +4,9 @@ There currently exists a total of 17 benchmarks, split according to both the num
 
 # 2 robots
 Domain independent: benchmarks 1, 4, 6, 7
+
 M-Domain specific: benchmarks 2, 3, 5, 8, 9
+
 A-Domain specific: benchmark 17
 
 # 3 robots
