@@ -11,8 +11,8 @@ M-Domain specific: benchmarks 2, 3, 5, 8, 9
 A-Domain specific: benchmark 17
 
 # 3 robots
-M-Domain specific: benchmarks 10, 11, 11mod, 12, 13, 14, 14mod1, 14mod2, 15
+M-Domain specific: benchmarks 10, 11, 11mod, 12, 13, 14, 14mod1, 14mod2
 
 # 4 robots
-M-Domain specific: benchmarks 15mod, 16
+M-Domain specific: benchmarks 15, 15mod, 16
 
