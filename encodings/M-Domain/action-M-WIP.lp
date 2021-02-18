@@ -34,6 +34,7 @@ wait(R2,T) :- move(R1,D1,T,N), move(R2,D2,T,N), position(R1,C1',T-1), R2>R1, nex
 %introduce a wait for a robot waiting for its spot to be vacated by another robot who also triggered a wait
 wait(R2,T) :- move(R2,(DX,DY),T,N), position(R2,C2',T-1), nextto(C2',(DX,DY),C), position(R1,C,T-1), wait(R1,T), not move(R1,(-DX,-DY),T,_).
 
+
 %COLLISION TYPE 2: 2 robots want to swap places (edge collision)
 %SOLUTION: robot with higher ID needs to vacate its spot, then return to it in the next step
 %FOUND PROBLEMS: if robot with higher priority stops on the new field, other robot needs to find a new path to goal, SOLUTION: nmc_dodge
