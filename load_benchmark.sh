@@ -3,6 +3,7 @@
 PS3='Choose the number listed on the left of your choice: '
 
 robots=("2 Robots" "3 Robots" "All" "Quit")
+all=("M-Domain" "A-Domain" "Both Domains" "All" "Back" "Quit")
 domain=("M-Domain" "A-Domain" "Both Domains" "Back" "Quit")
 ben2M=("Benchmark 1" "Benchmark 2" "Benchmark 3" "Benchmark 4" "Benchmark 5" "Benchmark 6" "Benchmark 7" "Benchmark 8" "Benchmark 9" "Back" "Quit")
 ben2O=("Benchmark 1" "Benchmark 4" "Benchmark 6" "Benchmark 7" "Back" "Quit")
@@ -258,8 +259,8 @@ select rob in "${robots[@]}"; do
 			;;
 		"All")
 			echo "including all benchmarks"
-			select dom in "${domain[@]}"; do
-				case $dom in
+			select all in "${all[@]}"; do
+				case $all in
 					"M-Domain")
 						echo "loading all benchmarks for the M domain into lab"
 						./encodings/scripts/loader/load_bench_1_M.sh
@@ -286,6 +287,14 @@ select rob in "${robots[@]}"; do
 						exit
 						;;
 					"Both Domains")
+						echo "loading all benchmarks, that can be compiled in both A and M domain into the lab"
+						./encodings/scripts/loader/load_bench_1_M.sh
+						./encodings/scripts/loader/load_bench_4_M.sh
+						./encodings/scripts/loader/load_bench_6_M.sh
+						./encodings/scripts/loader/load_bench_7_M.sh
+						exit
+						;;
+					"All")
 						echo "loading all benchmarks into lab"
 					#M-Domain
 						./encodings/scripts/loader/load_bench_1_M.sh
