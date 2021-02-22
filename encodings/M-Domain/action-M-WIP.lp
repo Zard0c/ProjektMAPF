@@ -59,13 +59,30 @@ no_dodge(R2,T) :- not dodge_where(R2,_,T), dodge_coll(R1,R2,T), dodge_where(R1,_
 occ_dodge(R1,T) :- dodge_where(R1,D,T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T), nextto(C1,D,C3), R3!=R2, R3!=R1.
 occ_dodge(R2,T) :- dodge_where(R2,D,T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T), nextto(C2,D,C3), R3!=R2, R3!=R1.
 
+%if robots encounter each other in a tunnel and one has to dodge backwards
+%doubled up here because our dodge_coll only checks for R2>R1; these are all possible first steps
+back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N1), collision(R2,T-1,N2), N2>N1, not back_dodge(R2,T-1).
+back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N), collision(R2,T-1,N), R1>R2, not back_dodge(R2,T-1).
+back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N1), collision(R2,T-1,N2), N2<N1, not back_dodge(R2,T-1).
+back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N), collision(R2,T-1,N), R1<R2, not back_dodge(R2,T-1).
+
+%these happen after one of the aforementioned first steps and are written in such a way that a robot that began going backwards keeps doing so
+back_dodge(R1,T) :- dodge_coll(R1,R2,T), collision(R1,T-1,_), collision(R2,T-1,_), not dodge_where(R1,_,T), not dodge_where(R2,_,T), back_dodge(R1,T-1), not back_dodge(R2,T-1).
+back_dodge(R2,T) :- dodge_coll(R1,R2,T), collision(R1,T-1,_), collision(R2,T-1,_), not dodge_where(R2,_,T), not dodge_where(R1,_,T), back_dodge(R2,T-1), not back_dodge(R1,T-1).
+
 %deciding who dodges
-1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), N2>N1, collision(R1,T-1,N1), collision(R2,T-1,N2), not no_dodge(R1,T),not no_dodge(R2,T), not occ_dodge(R1,T).
-1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), N1>=N2, collision(R1,T-1,N1), collision(R2,T-1,N2), not no_dodge(R1,T), not no_dodge(R2,T), not occ_dodge(R2,T).
+%basic dodges, the robot with lower collision depth will be forced to dodge, or in case of equal col. depth the robot with higher ID
+1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), N2>N1, collision(R1,T-1,N1), collision(R2,T-1,N2), not no_dodge(R1,T), not occ_dodge(R1,T), not no_dodge(R2,T), not back_dodge(R1,T), not back_dodge(R2,T).
+1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), N1>=N2, collision(R1,T-1,N1), collision(R2,T-1,N2), not no_dodge(R1,T), not no_dodge(R2,T), not occ_dodge(R2,T), not back_dodge(R2,T).
+%special case, where the robot with higher priority will dodge if the lower priority robot's spots are taken by other robots
 1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), occ_dodge(R1,T).
 1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), occ_dodge(R2,T).
+%special case, where higher priority robot dodges, if lower priority robot can't dodge in the first place
 1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), no_dodge(R2,T).
 1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), no_dodge(R1,T).
+%special case, where a robot has to "dodge backwards", say in a tunnel
+dodge_who(R1,D,T) :- move(R2,D,T,N), dodge_coll(R1,R2,T), back_dodge(R1,T).
+dodge_who(R2,D,T) :- move(R1,D,T,N), dodge_coll(R1,R2,T), back_dodge(R2,T).
 
 %apply the dodge move to final move/3 in preparation of merge and insert a (step_)move back to the previously vacated spot from where to continue
 move(R,D,T) :- dodge_who(R,D,T), collision(R,T-1,N).
