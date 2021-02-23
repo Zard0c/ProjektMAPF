@@ -63,8 +63,8 @@ occ_dodge(R2,T) :- dodge_where(R2,D,T), dodge_coll(R1,R2,T), position(R2,C2,T-1)
 %doubled up here because our dodge_coll only checks for R2>R1; these are all possible first steps
 back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N1), collision(R2,T-1,N2), N2>N1, not back_dodge(R2,T-1).
 back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N), collision(R2,T-1,N), R1>R2, not back_dodge(R2,T-1).
-back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N1), collision(R2,T-1,N2), N2<N1, not back_dodge(R2,T-1).
-back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N), collision(R2,T-1,N), R1<R2, not back_dodge(R2,T-1).
+back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N1), collision(R2,T-1,N2), N2<N1, not back_dodge(R1,T-1).
+back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N), collision(R2,T-1,N), R1<R2, not back_dodge(R1,T-1).
 
 %these happen after one of the aforementioned first steps and are written in such a way that a robot that began going backwards keeps doing so
 back_dodge(R1,T) :- dodge_coll(R1,R2,T), collision(R1,T-1,_), collision(R2,T-1,_), not dodge_where(R1,_,T), not dodge_where(R2,_,T), back_dodge(R1,T-1), not back_dodge(R2,T-1).
