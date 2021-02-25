@@ -26,9 +26,13 @@ collision(R,0,0) :- isRobot(R).
 %COLLISION TYPE: 2 robots want to move to same field (vertex collision)
 %SOLUTION: robot with highest ID needs to wait
 
-wait(R1,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N2>N1, R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C).
+wait(R1,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N2>N1, R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C), not wait(R2,T).
 
-wait(R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N1>=N2, R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C).
+wait(R2,T) :- move(R1,D1,T,N1), move(R2,D2,T,N2), position(R1,C1',T-1), N1>=N2, R2>R1, nextto(C1',D1,C), position(R2,C2',T-1), nextto(C2',D2,C), not wait(R1,T).
+
+wait(R2,T) :- move(R2,D,T,N1), pickup(R1,_,T), position(R1,C1,T-1), position(R2,C2,T-1), nextto(C2,D,C1).
+
+wait(R2,T) :- move(R2,D,T,N1), putdown(R1,_,T), position(R1,C1,T-1), position(R2,C2,T-1), nextto(C2,D,C1).
 
 
 %COLLISION TYPE: 2 robots want to swap places (edge collision)
@@ -84,6 +88,7 @@ step_putdown(R,S,T1+2,N+1) :- step_putdown(R,S,T1,N), dodge_who(R,_,T), collisio
 
 
 
+wait(R1,T) :- move(R1,D,T,N), step_pickup(R1,S,T+1,N), carries(_,S,T), collision(R1,T-1,N).
 
 
 
