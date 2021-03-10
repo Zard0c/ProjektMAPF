@@ -74,12 +74,14 @@ back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), occ_dodge(R2,T
 back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R2,_,T), occ_dodge(R1,T).
 
 %these happen after one of the aforementioned first steps and are written in such a way that a robot that began going backwards keeps doing so
-back_dodge(R1,T) :- dodge_coll(R1,R2,T), collision(R1,T-1,_), collision(R2,T-1,_), not dodge_where(R1,_,T), not dodge_where(R2,_,T), back_dodge(R1,T-1), not back_dodge(R2,T-1).
-back_dodge(R2,T) :- dodge_coll(R1,R2,T), collision(R1,T-1,_), collision(R2,T-1,_), not dodge_where(R2,_,T), not dodge_where(R1,_,T), back_dodge(R2,T-1), not back_dodge(R1,T-1).
+back_dodge(R1,T) :- dodge_coll(R1,R2,T), collision(R1,T-1,_), collision(R2,T-1,_), not dodge_where(R1,_,T), not dodge_where(R2,_,T), back_dodge(R1,T-1), not deadend(R1,T).
+back_dodge(R2,T) :- dodge_coll(R1,R2,T), collision(R1,T-1,_), collision(R2,T-1,_), not dodge_where(R2,_,T), not dodge_where(R1,_,T), back_dodge(R2,T-1), not deadend(R2,T).
+back_dodge(R1,T) :- dodge_coll(R1,R2,T), back_dodge(R2,T-1), deadend(R2,T).
+back_dodge(R2,T) :- dodge_coll(R1,R2,T), back_dodge(R1,T-1), deadend(R1,T).
 
 %to prevent a deadlock in case a robot would dodge backwards into a tunnel where it has not way of dodging out of the way, like bench16 mod2
-deadend_dodge(R1,T) :- dodge_coll(R1,R2,T), back_dodge(R1,T), move(R2,D,T,_), position(R1,C1,T-1), not nextto(C1,D,C), position(C).
-deadend_dodge(R2,T) :- dodge_coll(R1,R2,T), back_dodge(R2,T), move(R1,D,T,_), position(R2,C2,T-1), not nextto(C2,D,C), position(C).
+deadend(R1,T) :- dodge_coll(R1,R2,T), back_dodge(R1,T-1), move(R2,D,T,_), position(R1,C1,T-1), not nextto(C1,D,_).
+deadend(R2,T) :- dodge_coll(R1,R2,T), back_dodge(R2,T-1), move(R1,D,T,_), position(R2,C2,T-1), not nextto(C2,D,_).
 
 %deciding who dodges
 %basic dodges, the robot with lower collision depth will be forced to dodge, or in case of equal col. depth the robot with higher ID
@@ -94,9 +96,6 @@ deadend_dodge(R2,T) :- dodge_coll(R1,R2,T), back_dodge(R2,T), move(R1,D,T,_), po
 %special case, where a robot has to "dodge backwards", say in a tunnel
 dodge_who(R1,D,T) :- move(R2,D,T,N), dodge_coll(R1,R2,T), back_dodge(R1,T), not deadend_dodge(R1,T).
 dodge_who(R2,D,T) :- move(R1,D,T,N), dodge_coll(R1,R2,T), back_dodge(R2,T), not deadend_dodge(R2,T).
-%special case, where the previously backwards dodging robot reaches a dead end before being able to make way for the other robot
-dodge_who(R1,D,T) :- move(R2,D,T,N), dodge_coll(R1,R2,T), deadend_dodge(R2,T).
-dodge_who(R2,D,T) :- move(R1,D,T,N), dodge_coll(R1,R2,T), deadend_dodge(R1,T).
 
 %apply the dodge move to final move/3 in preparation of merge and insert a (step_)move back to the previously vacated spot from where to continue
 move(R,D,T) :- dodge_who(R,D,T), collision(R,T-1,N).
