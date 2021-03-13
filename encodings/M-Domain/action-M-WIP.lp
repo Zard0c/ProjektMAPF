@@ -94,8 +94,8 @@ deadend(R2,T) :- dodge_coll(R1,R2,T), back_dodge(R2,T-1), move(R1,D,T,_), positi
 1{dodge_who(R1,D,T) : dodge_where(R1,D,T)}1 :- dodge_coll(R1,R2,T), no_dodge(R2,T), not occ_dodge(R1,T).
 1{dodge_who(R2,D,T) : dodge_where(R2,D,T)}1 :- dodge_coll(R1,R2,T), no_dodge(R1,T), not occ_dodge(R2,T).
 %special case, where a robot has to "dodge backwards", say in a tunnel
-dodge_who(R1,D,T) :- move(R2,D,T,N), dodge_coll(R1,R2,T), back_dodge(R1,T), not deadend_dodge(R1,T).
-dodge_who(R2,D,T) :- move(R1,D,T,N), dodge_coll(R1,R2,T), back_dodge(R2,T), not deadend_dodge(R2,T).
+dodge_who(R1,D,T) :- move(R2,D,T+1,N), dodge_coll(R1,R2,T), back_dodge(R1,T), not deadend_dodge(R1,T).
+dodge_who(R2,D,T) :- move(R1,D,T+1,N), dodge_coll(R1,R2,T), back_dodge(R2,T), not deadend_dodge(R2,T).
 
 %apply the dodge move to final move/3 in preparation of merge and insert a (step_)move back to the previously vacated spot from where to continue
 move(R,D,T) :- dodge_who(R,D,T), collision(R,T-1,N).
