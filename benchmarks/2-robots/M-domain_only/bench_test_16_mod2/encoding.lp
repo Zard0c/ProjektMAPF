@@ -1,11 +1,11 @@
 % = MOO DOMAIN: BOOLEAN ENCODING ===================================================================
-#include "./plan_r1.lp".
-#include "./plan_r2.lp".
+#include "../plans/plan_I16_3_r1_M.lp".
+#include "../plans/plan_I16_3_r2_M.lp".
 % Move actions
-#include "../encodings/action-M.lp".
+#include "../../encodings/M-Domain/action-M.lp".
 
 % Order fulfillment (Goal condition)
-#include "../encodings/goal-M.lp".
+#include "../../encodings/M-Domain/goal-M.lp".
 
 % Output conversion
-#include "../encodings/output-M.lp".
+#include "../../encodings/M-Domain/output-M.lp".
