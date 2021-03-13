@@ -86,7 +86,7 @@ step_pickup(R,S,T1+2,N+1) :- step_pickup(R,S,T1,N), dodge_who(R,_,T), collision(
 step_putdown(R,S,T1+2,N+1) :- step_putdown(R,S,T1,N), dodge_who(R,_,T), collision(R,T-1,N),(T1+1)>T, horizon>(T1-1).
 
 
-
+%wait for shelf to come back
 
 wait(R1,T) :- move(R1,D,T,N), step_pickup(R1,S,T+1,N), carries(_,S,T), collision(R1,T-1,N).
 
@@ -103,19 +103,20 @@ s_wait(R,T) :- s_coll(R,T), step_move(R,(-X,-Y),T+1,N), move(R,(X,Y),T,N).
  s_str_dodge(R,T) :- s_coll(R,T), step_move(R,D1,T+1,N), move(R,D,T,N), D1 == D.
 s_corn_dodge(R,T) :- s_coll(R,T), step_move(R,D1,T+1,N), move(R,D,T,N), D1 != D, not s_wait(R,T).
 
-
+%s_wait/2 still wip, but can only happen during a dodge
 
 
 %adjusting the move for the shelf collision with corn dodge
 
-%move(R,D,T) :- step_move(R,D,T+1,N), collision(R,T-1,N), s_corn_dodge(R,T).
+move(R,D,T) :- step_move(R,D,T+1,N), collision(R,T-1,N), s_corn_dodge(R,T).
 step_move(R,D,T+1,N+1) :- move(R,D,T,N), s_corn_dodge(R,T).
 
-%step_move(R,D,T1+2,N+1) :- step_move(R,D,T1,N), s_corn_dodge(R,T), (T1+1)>T, collision(R,T-1,N), horizon>(T1-1).
+step_move(R,D,T1,N+1) :- step_move(R,D,T1,N), s_corn_dodge(R,T), T1>(T+1), collision(R,T-1,N), horizon>(T1-1).
 
-%step_pickup(R,S,T1+2,N+1) :- step_pickup(R,S,T1,N), s_corn_dodge(R,T), collision(R,T-1,N),(T1+1)>T, horizon>(T1-1).
 
-%step_putdown(R,S,T1+2,N+1) :- step_putdown(R,S,T1,N), s_corn_dodge(R,T), collision(R,T-1,N),(T1+1)>T, horizon>(T1-1).
+step_pickup(R,S,T1,N+1) :- step_pickup(R,S,T1,N), s_corn_dodge(R,T), collision(R,T-1,N),T1>(T+1), horizon>(T1-1).
+
+step_putdown(R,S,T1,N+1) :- step_putdown(R,S,T1,N), s_corn_dodge(R,T), collision(R,T-1,N),T1>(T+1), horizon>(T1-1).
 
 
 %adjusting the move for the shelf collision with str dodge
@@ -133,7 +134,7 @@ step_pickup(R,S,T1+2,N+1) :- step_pickup(R,S,T1,N), s_str_dodge(R,T), collision(
 
 step_putdown(R,S,T1+2,N+1) :- step_putdown(R,S,T1,N), s_str_dodge(R,T), collision(R,T-1,N),T1>(T+1), horizon>(T1-1).
 
-%shelf stands at putdown square square
+%shelf stands at putdown square redudant, since shelfs have unique squares to be putdowned
 
 s_end(R,T) :- s_coll(R,T), not step_move(R,_,T+1,N), collision(R,T-1,N).
 
