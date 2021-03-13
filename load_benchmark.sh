@@ -5,11 +5,11 @@ PS3='Choose the number listed on the left of your choice: '
 robots=("2 Robots" "3 Robots" "4 Robots" "All" "Quit")
 all=("M-Domain" "A-Domain" "Both Domains" "All" "Back" "Quit")
 domain=("M-Domain" "A-Domain" "Both Domains" "Back" "Quit")
-ben2M=("Benchmark 1" "Benchmark 2" "Benchmark 3" "Benchmark 4" "Benchmark 5" "Benchmark 6" "Benchmark 7" "Benchmark 8" "Benchmark 9" "Benchmark 16.3" "Benchmark 18.2" "Benchmark 18.2" "Back" "Quit")
+ben2M=("Benchmark 1" "Benchmark 2" "Benchmark 3" "Benchmark 4" "Benchmark 5" "Benchmark 6" "Benchmark 7" "Benchmark 8" "Benchmark 9" "Benchmark 16.3" "Benchmark 18.1" "Benchmark 18.2" "Back" "Quit")
 ben2O=("Benchmark 1" "Benchmark 4" "Benchmark 6" "Benchmark 7" "Back" "Quit")
 ben2A=("Benchmark 1" "Benchmark 4" "Benchmark 6" "Benchmark 7" "Benchmark 17" "Back" "Quit")
 ben3M=("Benchmark 10" "Benchmark 11.1" "Benchmark 11.2" "Benchmark 12" "Benchmark 13" "Benchmark 14.1" "Benchmark 14.2" "Benchmark 14.3" "Back" "Quit")
-ben4M=("Benchmark 15.1" "Benchmark 15.2" "Benchmark 16.2" "Benchmark 16.2" "Back2" "Quit")
+ben4M=("Benchmark 15.1" "Benchmark 15.2" "Benchmark 16.1" "Benchmark 16.2" "Back" "Quit")
 
 echo "To load a benchmark, choose the amount of robots, the domain which should be compiled and then the benchmark"
 echo "You can go back one step by choosing Back, or leave midway by choosing Quit"

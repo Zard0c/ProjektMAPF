@@ -3,10 +3,10 @@
 #include "../plans/plan_I10_r2_M.lp".
 #include "../plans/plan_I10_r3_M.lp".
 % Move actions
-#include "../../encodings/action-M.lp".
+#include "../../encodings/M-Domain/action-M.lp".
 
 % Order fulfillment (Goal condition)
-#include "../../encodings/goal-M.lp".
+#include "../../encodings/M-Domain/goal-M.lp".
 
 % Output conversion
-#include "../../encodings/output-M.lp".
+#include "../../encodings/M-Domain/output-M.lp".

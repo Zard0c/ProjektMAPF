@@ -9,4 +9,4 @@ cp ./benchmarks/2-robots/M-domain_only/bench_test_8/encoding.lp ./lab/instances/
 ./encodings/scripts/plan_creater/plan_create_8_M.sh
 
 
-clingo --out-atomf="%s." -V0 -c horizon=12 ./lab/instances/encoding_8_M.lp ./lab/instances/instance_8.lp | grep object > ./lab/results/result_8_M.lp
+clingo --out-atomf="%s." -V0 -c horizon=13 ./lab/instances/encoding_8_M.lp ./lab/instances/instance_8.lp | grep object > ./lab/results/result_8_M.lp

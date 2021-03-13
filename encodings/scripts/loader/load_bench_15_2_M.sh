@@ -2,7 +2,7 @@
 
 cp ./benchmarks/4-robots/bench_test_15_mod/instance.png ./lab/instances/instance_15_2.png
 
-cp ./benchmarks/4-robots/bench_test_15_mod/instance.lp ./lab/instances/instance_15_12.lp
+cp ./benchmarks/4-robots/bench_test_15_mod/instance.lp ./lab/instances/instance_15_2.lp
 
 cp ./benchmarks/4-robots/bench_test_15_mod/encoding.lp ./lab/instances/encoding_15_2_M.lp
 
