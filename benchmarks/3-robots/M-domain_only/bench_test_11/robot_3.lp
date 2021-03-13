@@ -42,7 +42,7 @@ init(object(shelf,1), value(at,(8,2))).
 init(object(shelf,2), value(at,(9,2))).
 init(object(shelf,3), value(at,(1,2))).
 init(object(product,3),value(on,(3,1))).
-init(object(robot,3), value(at,(9,2))).
+init(object(robot,3), value(at,(8,2))).
 init(object(robot,3), value(max_energy,0)).
 init(object(robot,3), value(energy,0)).
 init(object(order,3),value(pickingStation,0)).

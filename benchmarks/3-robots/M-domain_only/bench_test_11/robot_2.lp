@@ -38,8 +38,8 @@ init(object(highway, 26), value(at, (8, 3))).
 init(object(highway, 8), value(at, (8, 1))).
 init(object(highway, 9), value(at, (9, 1))).
 init(object(highway, 27), value(at, (9, 3))).
-init(object(shelf,1), value(at,(8,2))).
-init(object(shelf,2), value(at,(9,2))).
+init(object(shelf,1), value(at,(9,2))).
+init(object(shelf,2), value(at,(8,2))).
 init(object(product,2),value(on,(2,1))).
 init(object(shelf,3), value(at,(1,2))).
 init(object(robot,2), value(at,(2,2))).

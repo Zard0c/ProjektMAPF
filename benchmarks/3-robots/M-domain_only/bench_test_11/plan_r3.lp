@@ -5,4 +5,3 @@ plan_occurs(object(robot, 3), action(move,(-1,0)), 4).
 plan_occurs(object(robot, 3), action(move,(-1,0)), 5).
 plan_occurs(object(robot, 3), action(move,(-1,0)), 6).
 plan_occurs(object(robot, 3), action(move,(-1,0)), 7).
-plan_occurs(object(robot, 3), action(move,(-1,0)), 8).
