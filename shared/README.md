@@ -1,3 +1,4 @@
+# README
 Benchmarks
 
 This folder contains our 4 benchmarks for the comparison tests.
