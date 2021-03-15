@@ -1,6 +1,7 @@
 % = MOO DOMAIN: BOOLEAN ENCODING ===================================================================
-#include "../plans/plan_I1_r1_M.lp".
-#include "../plans/plan_I1_r2_M.lp".
+#include "../plans/plan_I14_3_r1_M.lp".
+#include "../plans/plan_I14_3_r2_M.lp".
+#include "../plans/plan_I14_3_r3_M.lp".
 % Move actions
 #include "../../encodings/A-Domain/action-A.lp".
 
