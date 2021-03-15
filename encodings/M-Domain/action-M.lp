@@ -64,8 +64,8 @@ no_dodge(R2,T) :- not dodge_where(R2,_,T), dodge_coll(R1,R2,T), dodge_where(R1,_
 :- no_dodge(R,T), dodge_where(R,_,T).
 
 %if found areas to dodge to are actually occupied by another robot
-occ_dodge(R1,T) :- dodge_where(R1,(DX,DY),T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T), nextto(C1,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T), nextto(C1,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1.
-occ_dodge(R2,T) :- dodge_where(R2,(DX,DY),T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T), nextto(C2,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T), nextto(C2,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1.
+occ_dodge(R1,T) :- dodge_where(R1,(DX,DY),T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T-1), nextto(C1,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T-1), nextto(C1,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1.
+occ_dodge(R2,T) :- dodge_where(R2,(DX,DY),T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T-1), nextto(C2,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T-1), nextto(C2,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1.
 
 %if robots encounter each other in a tunnel and one has to dodge backwards
 %doubled up here because our dodge_coll only checks for R2>R1; these are all possible first steps
@@ -162,10 +162,10 @@ position(R,C,T) :- position(R,C,T-1), not move(R,_,T), isRobot(R), time(T).
 
 % - edge collision --------------------------------------------------------------
 moveto(C',C,T) :- nextto(C',D,C), position(R,C',T-1), move(R,D,T).
-%:- moveto(C',C,T), moveto(C,C',T), C < C'.
+:- moveto(C',C,T), moveto(C,C',T), C < C'.
 
 % - vertex collision ------------------------------------------------------------
-%:- { position(R,C,T) : isRobot(R) }  > 1, position(C), time(T).
+:- { position(R,C,T) : isRobot(R) }  > 1, position(C), time(T).
 
 % - auxiliaries -----------------------------------------------------------------
-%:- { position(R,C,T) } != 1, isRobot(R), time(T).    % REDUNDANT but PERFORMANT?
+:- { position(R,C,T) } != 1, isRobot(R), time(T).    % REDUNDANT but PERFORMANT?

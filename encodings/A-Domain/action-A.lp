@@ -82,8 +82,11 @@ no_dodge(R2,T) :- not dodge_where(R2,_,T), dodge_coll(R1,R2,T), dodge_where(R1,_
 :- no_dodge(R,T), dodge_where(R,_,T).
 
 %if found areas to dodge to are actually occupied by another robot
-occ_dodge(R1,T) :- dodge_where(R1,(DX,DY),T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T), nextto(C1,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T), nextto(C1,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1.
-occ_dodge(R2,T) :- dodge_where(R2,(DX,DY),T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T), nextto(C2,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T), nextto(C2,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1.
+occ_dodge(R1,T) :- dodge_where(R1,(DX,DY),T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T-1), nextto(C1,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T-1), nextto(C1,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1, isRobot(R3), isRobot(R4).
+occ_dodge(R2,T) :- dodge_where(R2,(DX,DY),T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T-1), nextto(C2,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T-1), nextto(C2,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1, isRobot(R3), isRobot(R4).
+
+
+%occ_dodge(robot(1),3).
 
 %if robots encounter each other in a tunnel and one has to dodge backwards
 %doubled up here because our dodge_coll only checks for R2>R1; these are all possible first steps
@@ -91,11 +94,6 @@ back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_wher
 back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N), collision(R2,T-1,N), R1>R2, not back_dodge(R2,T).
 back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N1), collision(R2,T-1,N2), N2<N1, not back_dodge(R1,T).
 back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N), collision(R2,T-1,N), R1<R2, not back_dodge(R1,T).
-
-%for a column of robots, experimental, potentially scrap this
-%back_dodge(R1,T) :- position(R1,C1,T-1), position(R2,C2,T-1), not dodge_coll(R1,R2,T), move(R1,D,T,_), nextto(C1,D,C2), not nextto(C1,(0,1),_), not nextto(C1,(0,-1),_).
-%back_dodge(R2,T) :- position(R1,C1,T-1), position(R2,C2,T-1), not dodge_coll(R1,R2,T), move(R2,D,T,_), nextto(C2,D,C1), not nextto(C2,(0,1),_), not nextto(C2,(0,-1),_).
-%back_dodge(R2,T) :- not dodge_coll(R1,R2,T), not dodge_where(R1,_,T), position(R1,C1,T-1), position(R2,C2,T-1), move(R2,D,T,_), nextto(C2,D,C1), back_dodge(R1,T). 
 
 %in case neither robot can dodge but for different reasons, the no_dodge robot gets higher priority and forces the other to dodge backwards
 back_dodge(R2,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), occ_dodge(R2,T).
@@ -187,14 +185,10 @@ putdown(R,S,T) :- step_putdown(R,S,T,N), collision(R,T-1,N).
 
 
 %defining move/3
-move(R,D,T) :- move(R,D,T,N), not wait(R,T), not dodge_who(R,_,T), not s_coll(R,T), not nmc_dodge(R,T).
-
-
-{move(R,D,T,N) : direction(D)}1 :- isRobot(R), time(T), not step_move(R,_,T,N), collision(R,T-1,N).
-
+move(R,D,T) :- move(R,D,T,N), not wait(R,T), not dodge_who(R,_,T), not s_coll(R,T), not nmc_dodge(R,T), not putdown(R,_,T), not pickup(R,_,T).
 
 {  move(R,D,T,N) : direction(D);
-   pickup(R,S,T) :   isShelf(S);
+   pickup(R,S,T) :   isShelf(S), not step_pickup(R',S,T',_), R'!=R, isRobot(R'), T'>T, time(T');
   putdown(R,S,T) :   isShelf(S)} 1 :- isRobot(R), time(T), not step_move(R,_,T,N), not step_pickup(R,_,T,N), not step_putdown(R,_,T,N), collision(R,T-1,N).
 
 

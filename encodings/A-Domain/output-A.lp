@@ -6,16 +6,14 @@
 %#show pickup/3.
 %#show putdown/3.
 %#show carries/3.
-%#show s_end/2.
-%#show s_coll/2.
-%#show s_str_dodge/2.
-%#show s_corn_dodge/2.
-%#show s_wait/2.
 %#show move/3.
-%#show prio1/3.
-%#show prio2/3.
 %#show nmc_dodge/2.
 %#show step_move/4.
+%#show occ_dodge/2.
+%#show dodge_who/3.
+%#show dodge_coll/3.
+%#show dodge_where/3.
+
 
 %the actuall output
 
