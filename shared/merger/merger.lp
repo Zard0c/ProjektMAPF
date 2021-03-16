@@ -81,9 +81,6 @@ no_dodge(R2,T) :- not dodge_where(R2,_,T), dodge_coll(R1,R2,T), dodge_where(R1,_
 occ_dodge(R1,T) :- dodge_where(R1,(DX,DY),T), dodge_coll(R1,R2,T), position(R1,C1,T-1), position(R3,C3,T-1), nextto(C1,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T-1), nextto(C1,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1, isRobot(R3), isRobot(R4).
 occ_dodge(R2,T) :- dodge_where(R2,(DX,DY),T), dodge_coll(R1,R2,T), position(R2,C2,T-1), position(R3,C3,T-1), nextto(C2,(DX,DY),C3), R3!=R2, R3!=R1, position(R4,C4,T-1), nextto(C2,(-DX,-DY),C4), R4!=R3, R4!=R2, R4!=R1, isRobot(R3), isRobot(R4).
 
-
-%occ_dodge(robot(1),3).
-
 %if robots encounter each other in a tunnel and one has to dodge backwards
 %doubled up here because our dodge_coll only checks for R2>R1; these are all possible first steps
 back_dodge(R1,T) :- dodge_coll(R1,R2,T), not dodge_where(R1,_,T), not dodge_where(R2,_,T), collision(R1,T-1,N1), collision(R2,T-1,N2), N2>N1, not back_dodge(R2,T).
