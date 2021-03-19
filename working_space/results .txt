@@ -1,0 +1,177 @@
+Adrian Merger:
+
+Benchmark ta_2(2), to_11/12(3-4) were killed by the processor
+
+Marcus Merger:
+
+Benchmark a_7(4), all n and to_11/12(3-4) were killed by the processor
+
+Niklas merger:
+
+Benchmark to_11/12(3-4) were killed by the processor
+
+Tarik merger:
+
+no benchmark were killed by the processor
+
+Tom merger:
+
+Benchmark to11/12(3-4) were killed by the processor
+
+
+Benchmark comparison:
+
+a_b_1:
+adrian solved in CPU Time     : 0.027s with horizon 5
+marcus solved in CPU Time     : 0.457s with horizon 5
+niklas solved in CPU Time     : 0.034s with horizon 5
+ tarik solved in CPU Time     : 0.058s with horizon 5
+   tom solved in CPU Time     : 0.018s with horizon 5
+
+a_b_5:
+adrian solved in CPU Time     : 0.125s with horizon 3
+niklas solved in CPU Time     : 0.017s with horizon 3
+   tom solved in CPU Time     : 0.016s with horizon 3
+ tarik was unsatisfiable.
+marcus was unsatisfiable.
+
+a_b_6:
+adrian solved in CPU Time     : 209.250s with horizon 14
+marcus solved in CPU Time     : 2.903s with horizon 14
+niklas solved in CPU Time     : 0.072s with horizon 7
+ tarik solved in CPU Time     : 0.065s with horizon 14
+   tom solved in CPU Time     : 0.094s with horizon 7/12
+
+a_b_7:
+adrian solved in CPU Time     : 55.426s with horizon 9
+marcus was killed;
+   tom was unsatisfiable
+niklas solved in CPU Time     : 0.179s with horizon 9
+ Tarik was unsatisfiable
+
+m_b_2:
+adrian solved in CPU Time     : 0.032s with horizon 7
+marcus solved in CPU Time     : 0.872s with horizon 7
+niklas solved in CPU Time     : 0.028s with horizon 5/7
+ tarik solved in CPU Time     : 0.029s with horizon 5
+ tom was unsatisfiable.
+   
+m_b_3
+adrian solved in CPU Time     : 0.014s with horizon 4
+marcus solved in CPU Time     : 0.105s with horizon 4
+niklas solved in CPU Time     : 0.012s with horizon 4
+ tarik solved in CPU Time     : 0.029s with horizon 4
+ tom was insatisfiable.
+
+m_b_16_1:
+adrian solved in CPU Time     : 4.949s with horizon 8
+marcus solved in CPU Time     : 6.666s with horizon 9
+niklas solved in CPU Time     : 0.051s with horizon 6/9
+ tarik solved in CPU Time     : 0.041s with horizon 6
+   tom solved in CPU Time     : 0.107s with horizon 9(lot of filler movements, probably in 6)
+
+m_b_17(B-Domain):
+adrian unsatisfiable.
+marcus solved in CPU Time     : 4.578s with horizon 15
+niklas unsatisfiable.
+tarik unsatisfiable.
+tom unsatisfiable.
+{conclusion, we are only one with greater power then M domain}
+{also, niklas produced a solution, meaning the solver thinks that passing by the shelf fulfills goal condition}
+
+
+n_b_5:
+adrian unsatisfiable.
+marcus was killed. (can be solved)
+niklas solved in CPU Time     : 0.902s with horizon 12
+ tarik solved in CPU Time     : 0.180s with horizon 17
+   tom solved in CPU Time     : 0.309s with horizon 17? (lot of filler movement)
+
+{tom passed the benchmark, but at end had one robot move away from shelf; so solver considers goal fulfilled, after reaching the shelf, and doesn't need to stay there}
+
+n_b_6:
+adrian solved in CPU Time     : 187.834s with horizon ?
+marcus was killed. {expected unsat}
+niklas solved in CPU Time     : 0.129s with horizon 9
+ tarik solved in CPU Time     : 0.418s with horizon ? (r2 never reaches shelf)
+ tom is unsatisfiable.
+
+{instance broken? R2 behaves weird}
+
+n_b_42:
+adrian solved in CPU Time     : 6.442s with horizon 10
+marcus was killed. {expected solvable}
+niklas solved in CPU Time     : 0.229s with horizon 10
+ tarik solved in CPU Time     : 0.450s with horizon 12
+ tom is unsatisfiable.
+
+n_b_51:
+adrian solved in CPU Time     : 419.762s with horizon 21
+marcus was killed. {expected solvable}
+niklas solved in CPU Time     : 0.229s with horizon 21
+ tarik solved in CPU Time     : 3.433s with horizon 23
+  tom is unsatisfiable.
+
+ta_b_1:
+adrian is unsatisfiable.
+marcus is unsatisfiable.
+niklas is unsatisfiable.
+ tarik solved in CPU Time     : 0.037s with horizon 5
+   tom is unsatisfiable.
+
+ta_b_2:
+adrian killed.
+marcus is unsatisfiable. {theoratical solvable with horizon 36+}
+niklas solved in CPU Time     : 0.442s with horizon 19
+ tarik solved in CPU Time     : 0.352s with horizon 19
+  tom is unsatisfiable.
+
+ta_b_3:
+adrian solved in CPU Time     : 0.350s	 with horizon 9
+marcus is unsatisfiable.
+niklas solved in CPU Time     : 0.058s with horizon 9
+ tarik solved in CPU Time     : 0.191s with horizon 14
+   tom is unsatisfiable.
+
+ta_b_4:
+adrian solved in CPU Time     : 1.065s with horizon 15
+marcus solved in CPU Time     : 7.669s with horizon 16
+niklas solved in CPU Time     : 0.084s with horizon 15
+ tarik solved in CPU Time     : 0.064s with horizon 15
+   tom solved in CPU Time     : 0.152s with horizon 16
+   
+to_b_3:
+adrian was unsatisfiable.
+marcus was unsatisfiable. 
+niklas was unsatisfiable. 
+ tarik solved in CPU Time     : 0.047s with horizon 6
+   tom solved in CPU Time     : 0.127s with horizon 10
+
+{because of shelf numbering, leads to not be solvable in the expected horizon, as we expect r1 to go to s1, but the plan leads to s3}
+
+horizon to low?
+to_b_5:
+adrian solved in CPU Time     : 0.070s with horizon 4
+marcus solved in CPU Time     : 3.000s with horizon 4/7
+niklas solved in CPU Time     : 0.032s with horizon 4
+ tarik solved in CPU Time     : 0.024s with horizon 4
+   tom solved in CPU Time     : 0.060s with horizon 4/9
+
+to_b_11:
+adrian got killed.
+marcus got killed.
+niklas got killed.
+ tarik is unsatisfiable.
+   tom got killed.
+
+to_b_12:  
+adrian got killed. 
+marcus got killed.
+niklas got killed.
+ tarik is unsatisfiable.
+   tom got killed.
+
+
+   
+   
+
