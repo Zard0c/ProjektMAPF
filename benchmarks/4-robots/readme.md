@@ -8,4 +8,4 @@ Horizon 9
 # Benchmark 16
 The final form of benchmark 14, this scenarios models a simultaneous 4-way collision and shed light on another weakness of the dodge command as it was. It used to calculate spots to dodge to, but then found all of those spots taken by robots, meaning it had no valid direction to dodge to anymore, stalling the program. This in turn forced us to create a special case dodge which makes the higher priority robot dodge instead in such a case.
 
-Horizon: 8
+Horizon: 8 (9 for mod1)
